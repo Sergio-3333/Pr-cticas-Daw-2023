@@ -18,7 +18,7 @@
  },
     data() {
         return {
-        fields: ['id', 'afluencia', 'comparacion'],
+        fields: ['id', 'afluencia', 'comparacion' ],
         data: {
         "data": [
           {
@@ -44,7 +44,7 @@
             {
                 "id": 5,
                 "afluencia": 900,
-                "comparacion": 45
+                "comparacion": 1000
             },
             {
                 "id": 6,
@@ -59,7 +59,7 @@
             {
                 "id": 8,
                 "afluencia": 1100,
-                "comparacion": 55
+                "comparacion": 1500
             },
             {
                 "id": 9,
@@ -69,9 +69,17 @@
             {
                 "id": 10,
                 "afluencia": 950,
-                "comparacion": 0
+                "comparacion": 1000
              }
-          ]
+          ].map(obj => {
+          const operacion = ((obj.comparacion * 100) / obj.afluencia - 100).toFixed(2)
+          const color = operacion < 0 ? 'red' : 'green'
+          const comparacion = `${obj.comparacion} | <span style="color:${color}">${operacion}%</span>`
+          return {
+            ...obj,
+            comparacion
+          }
+        })
         }
       }
     }
