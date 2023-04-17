@@ -1,18 +1,26 @@
-<style> @import url(estilos.css);</style>
+<style>@import url(estilos.css);</style>
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <div id="app">
+      <h1>Tabla De Afluencias</h1>
+      <TablaAfluencia></TablaAfluencia>
+    </div>
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TablaAfluencia from './components/Tabla.vue'
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
-    HelloWorld
+    TablaAfluencia
   }
 }
 </script>
+
+
+
 
 
