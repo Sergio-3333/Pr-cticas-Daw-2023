@@ -33,3 +33,21 @@ td {
 tr:hover {
     background-color: #f1ff85;
 }
+
+div {
+    margin-top: 50px;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 200px;
+  }
