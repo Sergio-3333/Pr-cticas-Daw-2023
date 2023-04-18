@@ -25,3 +25,6 @@ export default {
   margin-top: 60px;
 }
 </style>
+
+
+<style>@import url(estilos.css);</style>

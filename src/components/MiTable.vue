@@ -4,6 +4,7 @@
       :data="data.data"
       :fields="fields"
       :api-mode="false"
+      :sort-params="getSortParam"
     ></vuetable>
   </div>
   </template>
@@ -24,57 +25,63 @@
               "id": 1,
               "afluencia": 1000,
               "comparacion": 50
-            },
-            {
+              },
+              {
               "id": 2,
               "afluencia": 500,
               "comparacion": 25
-            },
-            {
+              },
+              {
               "id": 3,
               "afluencia": 750,
               "comparacion": 35
-            },
-            {
+              },
+              {
               "id": 4,
               "afluencia": 1200,
               "comparacion": 60
-            },
-            {
+              },
+              {
               "id": 5,
               "afluencia": 900,
-              "comparacion": 1000
-            },
-            {
+              "comparacion": 45
+              },
+              {
               "id": 6,
               "afluencia": 1500,
               "comparacion": 75
-            },
-            {
+              },
+              {
               "id": 7,
               "afluencia": 800,
               "comparacion": 40
-            },
-            {
+              },
+              {
               "id": 8,
               "afluencia": 1100,
-              "comparacion": 1500
-            },
-            {
+              "comparacion": 55
+              },
+              {
               "id": 9,
               "afluencia": 650,
               "comparacion": 30
-            },
-            {
+              },
+              {
               "id": 10,
               "afluencia": 950,
-              "comparacion": 1000
+              "comparacion": 0
             }
           ]
         }
       }
     },
       methods: {
+
+        getSortParam(sortOrder) {
+      return sortOrder.map(function(sort) {
+        return (sort.direction === 'desc' ? '-' : '') + sort.field
+      }).join(',')
+    },
         ordenaXAfluencia() {
             this.data.data.sort((a, b) => a.afluencia - b.afluencia);
         },
