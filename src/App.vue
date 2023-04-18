@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MiTable from '../../Pr-cticas-Daw-2023/src/components/MiTable.vue';
+import MiTable from '../src/components/MiTable.vue';
 
 export default {
   name: 'app',
