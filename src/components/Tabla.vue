@@ -5,11 +5,17 @@
       :fields="fields"
       :api-mode="false"
     ></vuetable>
+    <br>
+    <button @click="descargarCSV()">
+        Descargar CSV
+    </button>
+
   </div>
   </template>
   
   <script>
   import Vuetable from 'vuetable-2'
+  import exportFromJSON from "export-from-json"
   
   export default {
     name: 'TablaAfluencia',
@@ -91,11 +97,27 @@
               comparacion
             }
           });
+        },
+
+        descargarCSV(){
+          const data = this.data.data.map(obj => {
+                return {
+                  ...obj,
+                  comparacion: obj.comparacion.replace(/<[^>]*>/g, '')
+                }
+              });
+
+          const nombreArchivo = 'Trabajo';
+          const exportType = exportFromJSON.types.csv;
+          exportFromJSON({data, fileName: nombreArchivo, exportType});
+          
         }
       },
+
       created() {
         this.ordenarAfluencia();
         this.operacionComparacion();
+        
     }
   }
 </script>
