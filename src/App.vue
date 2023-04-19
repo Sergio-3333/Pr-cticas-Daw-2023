@@ -7,12 +7,14 @@
 <script>
 import MiTable from '../src/components/MiTable.vue';
 
+
 export default {
   name: 'app',
   components: {
     MiTable
   }
-}
+    }
+
 </script>
 
 <style>
@@ -27,4 +29,4 @@ export default {
 </style>
 
 
-<style>@import url(estilos.css);</style>
+<style>@import "tabulator-tables";</style>
