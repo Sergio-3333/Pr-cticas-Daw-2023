@@ -11,10 +11,7 @@
         Descargar CSV
     </button>
 
-    <br>
-    <button @click="descargarCSV()">
-        Descargar CSV
-    </button>
+
   </div>
 </template>
 
