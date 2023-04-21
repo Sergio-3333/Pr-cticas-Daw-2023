@@ -2,6 +2,7 @@
 <style>@import "tabulator-tables";</style>
 <template>
   <div id="app">
+    <br>
     <MiTabla></MiTabla>
   </div>
 </template>

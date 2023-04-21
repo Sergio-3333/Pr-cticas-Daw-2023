@@ -3,6 +3,7 @@
     <h1>Tabla Básica</h1>
     <label for="busqueda">Introduce un número para filtrar: </label>
     <input id="busqueda" v-model="searchText"  placeholder="Buscar...">
+    <br><br>
 
     <div id="mitabla"></div>
 
@@ -24,16 +25,16 @@
     data() {
       return {
         data: [
-          {"id": 1, "afluencia": 1000, "comparacion": 50 }, 
+          {"id": 1, "afluencia": 1000, "comparacion": 1322 }, 
           {"id": 2, "afluencia": 500, "comparacion": 25 },
           {"id": 3, "afluencia": 750, "comparacion": 35},
-          {"id": 4, "afluencia": 1200, "comparacion": 60},
+          {"id": 4, "afluencia": 1200, "comparacion": 16516},
           {"id": 5, "afluencia": 900, "comparacion": 45},
           {"id": 6, "afluencia": 1500, "comparacion": 60 },
           {"id": 7, "afluencia": 800, "comparacion": 40},
-          {"id": 8, "afluencia": 1100, "comparacion": 55},
+          {"id": 8, "afluencia": 1100, "comparacion": 51555},
           {"id": 9, "afluencia": 650, "comparacion": 30},
-          {"id": 10, "afluencia": 950, "comparacion": 0}
+          {"id": 10, "afluencia": 950, "comparacion": 2135}
         ],
         searchText: ''
       }
@@ -53,6 +54,8 @@
 
     mounted() {
       this.table = new Tabulator("#mitabla", {
+        pagination:true, 
+        paginationSize:3, 
         columns: [
           { title: "ID", field: "id",sortable: true},
           { title: "Afluencia", field: "afluencia",sortable: true},
