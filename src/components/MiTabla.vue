@@ -16,8 +16,7 @@
 </template>
 
 <script>
-  import {Tabulator} from 'tabulator-tables';
-  import exportFromJSON from "export-from-json"
+  import {TabulatorFull as Tabulator} from 'tabulator-tables';
 
   export default {
     components: {  
@@ -54,49 +53,44 @@
 
     mounted() {
       this.table = new Tabulator("#mitabla", {
+        pagination:true, 
+        paginationSize:5,
         columns: [
-          { title: "ID", field: "id" },
-          { title: "Afluencia", field: "afluencia"},
-          { title: "Comparacion", field: "comparacion"},
+          { title: "ID", field: "id",sortable: true},
+          { title: "Afluencia", field: "afluencia", sortable: true, sorter:"number"},
+          { title: "Comparacion", field: "comparacion", formatter: this.operacionComparacion} //Uso el formater con una principal razon de uso pero sirve para dos cosas.
         ],
         data: this.filteredData,
-        
+        initialSort:[
+          {column:"afluencia", dir:"desc"}
+        ]
       });
     },
 
     methods: {
-      ordenarAfluencia() {
-        this.data.sort((a, b) => a.afluencia - b.afluencia);
-      },
-      operacionComparacion() {
-        this.data = this.data.map(obj => {
-          const operacion = ((obj.comparacion * 100) / obj.afluencia - 100).toFixed(2)
-          const color = operacion < 0 ? 'red' : 'green'
-          const comparacion = `${obj.comparacion} | <span style="color:${color}">${operacion}%</span>`
-          return {
-            ...obj,
-            comparacion
-          }
-        });
-      },
+      
+      operacionComparacion(obj) {
+          const operacion = ((obj.getValue() * 100) / obj.getRow().getData().afluencia - 100).toFixed(2); //La primera, me permite obtener el valor de cada fila de comparacion sin necesidad de hacerlo como en afluencia
+          const color = operacion < 0 ? 'red' : 'green';
+          const comparacion = `${obj.getValue()} | <span style="color:${color}">${operacion}%</span>`; //La segunda, me permite imprimir solo el valor de la operacion con el color obtenido en vez de que me imprima toda la etiqueta spam
+          return comparacion; 
+        },
 
       descargarCSV(){
-        const data = this.data.map(obj => {
+        const datosDescarga = this.filteredData.map(obj => {
+          
           return {
-            ...obj,
-            comparacion: obj.comparacion.replace(/<[^>]*>/g, '')
+            id: obj.id,
+            afluencia: obj.afluencia,
+            comparacion: obj.comparacion
           }
         });
-
-        const nombreArchivo = 'Trabajo';
-        const exportType = exportFromJSON.types.csv;
-        exportFromJSON({data, fileName: nombreArchivo, exportType});
+        this.table.download("csv","Trabajo.csv", datosDescarga);
       }
       
     },
 
     created() {
-      this.ordenarAfluencia();
       this.operacionComparacion();
     },
 
