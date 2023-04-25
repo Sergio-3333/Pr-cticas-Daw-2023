@@ -57,8 +57,8 @@
         pagination:true, 
         paginationSize:5,
         columns: [
-          { title: "ID", field: "id",sortable: true},
-          { title: "Afluencia", field: "afluencia", sortable: true, sorter:"number"},
+          { title: "ID", field: "id"},
+          { title: "Afluencia", field: "afluencia"},
           { title: "Comparacion", field: "comparacion", formatter: this.operacionComparacion} //Uso el formater con una principal razon de uso pero sirve para dos cosas.
         ],
         data: this.filteredData,
