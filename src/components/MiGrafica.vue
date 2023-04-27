@@ -33,6 +33,10 @@ export default {
     },
 
   mounted() {
+    const fecha = this.data.map(item => Date.parse(item.dt)); 
+    const vehiclesIn = this.data.map(item => item.vehiclesIn); 
+    const vehiclesOcc = this.data.map(item => item.vehiclesOcc); 
+    
     Highcharts.chart('container', {
         chart: {
                 type: 'area'
@@ -42,7 +46,7 @@ export default {
             },
             xAxis: {
                 type: "category",
-                data: this.data.hr,
+                fecha: fecha,
                 tickInterval: 2
             },
             yAxis: [{
@@ -56,24 +60,28 @@ export default {
                 },
                 opposite: true,
                 }],
+
             series: [{
-                    yAxis: 0,
-                    data: [55, 26, 15, 36, 27, 45, 31, 42, 42, 62, 31, 19, 43, 29, 49, 38],
-                    color: 'green'
+                    name: 'VehiclesOcc',
+                    yAxis: 1,
+                    data: vehiclesOcc,
+                    color: 'blue'
                 },
                 {
-                    yAxis: 1,
-                    data: [16, 7, 10, 18, 16, 6, 11, 26, 23, 21, 11, 7, 15, 13, 9, 18],
-                    color: 'blue'
+                    name: 'VehiclesIn',
+                    yAxis: 0,
+                    data: vehiclesIn,
+                    color: 'green'
                 }],
                 tooltip: {
-  formatter: function() {
-    var tooltip = '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '</b><br/>';
-    tooltip += 'VehiclesIn: <b>' + this.y + '</b><br/>';
-    tooltip += 'VehiclesOcc: <b>' + this.vehiclesOcc+ '</b><br/>';
-    return tooltip;
-  }
-},
+
+            formatter: function() {
+                var tooltip = 'Fecha: <b>' + Highcharts.dateFormat('%Y-%m-%d', fecha[this.point.index]) + '</b><br/>';
+                tooltip += 'VehiclesIn: <b>' + vehiclesIn[this.point.index] + '</b><br/>'; 
+                tooltip += 'VehiclesOcc: <b>' + vehiclesOcc[this.point.index] + '</b><br/>'; 
+                return tooltip;
+            }
+            },
 
     });
   }
