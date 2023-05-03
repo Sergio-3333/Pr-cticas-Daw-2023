@@ -1,21 +1,12 @@
 <template>
-    <div>
-        <div class="grid-stack">
-            <div class="grid-stack-item" data-gs-x = "0" data-gs-y = "0" data-gs-resizable = "false"  data-gs-moveable = "true">
-                <div class="grid-stack-item-content">
-                    <h1>Gráfica</h1>
-                    <div id="container"></div>
-                    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
-                </div>
-            </div>
-        </div>
-        
+    <div>           
+        <div id="container"></div>
     </div>
 </template>
 
 <script>
 import Highcharts from 'highcharts';
-import GridStack from 'gridstack';
+
 
 export default {
     components: {  
@@ -137,12 +128,12 @@ export default {
                         tooltip: {
 
                     formatter: function() {
-                        var tooltip = 'Fecha: <b>' + Highcharts.dateFormat('%Y-%m-%d', fecha[this.point.index]) + '</b><br/>';
-                        tooltip += 'Fecha Inventada: <b>' + Highcharts.dateFormat('%Y-%m-%d', fechaInvent[this.point.index]) + '</b><br/>';
-                        tooltip += 'VehiclesIn: <b>' + vehiclesIn[this.point.index] + '</b><br/>'; 
-                        tooltip += 'VehiclesIn Inventada: <b>' + vehiclesInInvent[this.point.index] + '</b><br/>'; 
-                        tooltip += 'VehiclesOcc: <b>' + vehiclesOcc[this.point.index] + '</b><br/>'; 
-                        tooltip += 'VehiclesOcc Inventada: <b>' + vehiclesOccInvent[this.point.index] + '</b><br/>'; 
+                        var tooltip = 'Fecha: <b>' + Highcharts.dateFormat('%Y-%m-%d', fecha[this.point.index]) + '</b><br/>'
+                        + 'Fecha Inventada: <b>' + Highcharts.dateFormat('%Y-%m-%d', fechaInvent[this.point.index]) + '</b><br/>'
+                        + 'VehiclesIn: <b>' + vehiclesIn[this.point.index] + '</b><br/>'
+                        + 'VehiclesIn Inventada: <b>' + vehiclesInInvent[this.point.index] + '</b><br/>'
+                        + 'VehiclesOcc: <b>' + vehiclesOcc[this.point.index] + '</b><br/>'
+                        + 'VehiclesOcc Inventada: <b>' + vehiclesOccInvent[this.point.index] + '</b><br/>'
                         return tooltip;
                     }
                     }
@@ -150,20 +141,10 @@ export default {
 
              }
             },
-
-
-        mounted() {
+            mounted() {
 
             Highcharts.chart('container', this.chartOptions);
 
-            var options = {
-                resizable: { 
-                    handles: 'e,se,s,sw,w'
-                 },
-                draggable: true
             }
-            GridStack.init(options)
- 
-    }
 }
 </script>
