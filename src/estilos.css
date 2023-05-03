@@ -72,11 +72,14 @@ label {
 .grid-stack {
     background-color: #eee;
     padding: 10px;
-  }
+    position: relative;
+    margin-top: 0%;
+}
 
-.grid-stack-item {
-    background-color: #fff;
+.grid-stack-item-content {
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
     padding: 10px;
-  }
+    background-color: #fff;
+    cursor: move;
+}
