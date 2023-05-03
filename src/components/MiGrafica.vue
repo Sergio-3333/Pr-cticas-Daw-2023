@@ -1,9 +1,21 @@
 <template>
-    <div id="container"></div>
+    <div>
+        <div class="grid-stack">
+            <div class="grid-stack-item" data-gs-x = "0" data-gs-y = "0" data-gs-resizable = "false"  data-gs-moveable = "true">
+                <div class="grid-stack-item-content">
+                    <h1>Gráfica</h1>
+                    <div id="container"></div>
+                    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </template>
 
 <script>
 import Highcharts from 'highcharts';
+import GridStack from 'gridstack';
 
 export default {
     components: {  
@@ -143,6 +155,14 @@ export default {
         mounted() {
 
             Highcharts.chart('container', this.chartOptions);
+
+            var options = {
+                resizable: { 
+                    handles: 'e,se,s,sw,w'
+                 },
+                draggable: true
+            }
+            GridStack.init(options)
  
     }
 }

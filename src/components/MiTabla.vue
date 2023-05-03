@@ -17,6 +17,7 @@
 
 <script>
   import {TabulatorFull as Tabulator} from 'tabulator-tables';
+import GridStack from 'gridstack';
 
   export default {
     components: {  
@@ -65,6 +66,14 @@
           {column:"afluencia", dir:"desc"}
         ]
       });
+
+      var options = {
+                resizable: { 
+                    handles: 'e,se,s,sw,w'
+                 },
+                draggable: true
+            }
+      GridStack.init(options)
     },
 
     methods: {

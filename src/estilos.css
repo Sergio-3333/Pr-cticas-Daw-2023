@@ -68,3 +68,15 @@ label {
     color: black;
     font-weight: bold;
 }
+
+.grid-stack {
+    background-color: #eee;
+    padding: 10px;
+  }
+
+.grid-stack-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+  }
