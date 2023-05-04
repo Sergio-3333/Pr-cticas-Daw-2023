@@ -5,17 +5,24 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.container-table {
+    width: 20rem;
+    padding: 2rem;
 }
 
 #mitabla {
     margin: 0 auto;
-    width: 15.5%;
     border: 1px solid #ccc;
     font-family: Arial, sans-serif;
     font-size: 14px;
+    width: 16.91rem;
 }
 
-#mitabla .tabulator-col {
+#app>div #mitabla #mitabla .tabulator-col {
     border-right: 1px solid #ccc;
     padding: 8px;
 }
