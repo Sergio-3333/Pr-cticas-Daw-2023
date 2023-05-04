@@ -1,12 +1,11 @@
 <template>
-    <div>           
+    <div class="prueba" style="width: 100%;">
         <div id="container"></div>
     </div>
 </template>
 
 <script>
 import Highcharts from 'highcharts';
-
 
 export default {
     components: {  
@@ -141,10 +140,12 @@ export default {
 
              }
             },
-            mounted() {
+
+
+        mounted() {
 
             Highcharts.chart('container', this.chartOptions);
-
-            }
+ 
+    }
 }
 </script>

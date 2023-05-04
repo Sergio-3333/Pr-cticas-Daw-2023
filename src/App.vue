@@ -3,48 +3,48 @@
 <template>
   <div id="app">
         <div class="grid-stack" >
-            <div class="grid-stack-item" >
-                <div class="grid-stack-item-content" data-gs-x="1" data-gs-y="1" data-gs-width="4" data-gs-height="4" data-gs-no-resize="true">
-                  <h1>Gráfica</h1>  
-                  <MiGrafica></MiGrafica>
-                </div>
+            <div class="grid-stack-item"  gs-max-w="10" gs-h="10" gs-w="4" >
+              <div class="grid-stack-item-content">
+                <MiGrafica></MiGrafica>
+              </div>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
 
 import MiGrafica from './components/MiGrafica.vue';
-import { GridStack } from 'gridstack';
-
+import GridStack from "/node_modules/gridstack/dist/gridstack-h5.js";
+import "gridstack/dist/gridstack.min.css";
 
 export default {
   name: 'app',
-  components: {
-    MiGrafica
-  },
+  components: { 
+    MiGrafica,
   
-
-    mounted() {
-    var options = {
-      cellHeight: 1500,
-      verticalMargin: 10,
-      handle: '.grid-stack-item-content',
-      draggable: true,
-      resizable: {
-        handles: 'e,se,s,sw,w'
-      }
-
-    };
-
-    const grid = GridStack.init(options, '.grid-stack');
-    grid.enableMove(true, true);
-  
-
+},
+      data() {
+      return {
+        grid: null,
+          options: { 
+            column:12,
+            cellHeight: 50,
+            verticalMargin: 10,
+            float: true,
+        resizable: {
+          handles: 'e, se, s, sw, w',
+        
+        },
       }
       
     }
+  },
+     mounted() {
+
+        this.grid = GridStack.init(this.options);
+
+        }
+}
 
 </script>

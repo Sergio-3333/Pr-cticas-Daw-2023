@@ -70,10 +70,13 @@ label {
 }
 
 .grid-stack {
-    background-color: #eee;
+    background-color: red;
     padding: 10px;
-    position: relative;
     margin-top: 0%;
+}
+
+.grid-stack-item {
+    background-color: mediumpurple;
 }
 
 .grid-stack-item-content {
