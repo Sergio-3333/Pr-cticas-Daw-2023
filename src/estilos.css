@@ -7,12 +7,17 @@
     margin-top: 10%;
 }
 
+.container-table {
+    width: 20rem;
+    padding: 2rem;
+}
+
 #mitabla {
     margin: 0 auto;
-    width: 26%;
     border: 1px solid #ccc;
     font-family: Arial, sans-serif;
     font-size: 14px;
+    width: 16.91rem;
 }
 
 #mitabla .tabulator-col {

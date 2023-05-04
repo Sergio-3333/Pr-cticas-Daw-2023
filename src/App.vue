@@ -5,6 +5,9 @@
         <div class="grid-stack" >
             <div class="grid-stack-item"  gs-max-w="10" gs-h="10" gs-w="4" >
               <div class="grid-stack-item-content">
+                <!--    <div class="container-table">
+                    <MiTabla></MiTabla>
+                        </div-->
                 <MiGrafica></MiGrafica>
               </div>
             </div>
@@ -15,6 +18,7 @@
 <script>
 
 import MiGrafica from './components/MiGrafica.vue';
+//import MiTabla from './components/MiTabla.vue';
 import GridStack from "/node_modules/gridstack/dist/gridstack-h5.js";
 import "gridstack/dist/gridstack.min.css";
 
@@ -22,6 +26,7 @@ export default {
   name: 'app',
   components: { 
     MiGrafica,
+    //MiTabla
   
 },
       data() {
