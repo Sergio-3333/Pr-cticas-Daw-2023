@@ -127,12 +127,12 @@ export default {
                         tooltip: {
 
                     formatter: function() {
-                        var tooltip = 'Fecha: <b>' + Highcharts.dateFormat('%Y-%m-%d', fecha[this.point.index]) + '</b><br/>';
-                        tooltip += 'Fecha Inventada: <b>' + Highcharts.dateFormat('%Y-%m-%d', fechaInvent[this.point.index]) + '</b><br/>';
-                        tooltip += 'VehiclesIn: <b>' + vehiclesIn[this.point.index] + '</b><br/>'; 
-                        tooltip += 'VehiclesIn Inventada: <b>' + vehiclesInInvent[this.point.index] + '</b><br/>'; 
-                        tooltip += 'VehiclesOcc: <b>' + vehiclesOcc[this.point.index] + '</b><br/>'; 
-                        tooltip += 'VehiclesOcc Inventada: <b>' + vehiclesOccInvent[this.point.index] + '</b><br/>'; 
+                        var tooltip = 'Fecha: <b>' + Highcharts.dateFormat('%Y-%m-%d', fecha[this.point.index]) + '</b><br/>'
+                        + 'Fecha Inventada: <b>' + Highcharts.dateFormat('%Y-%m-%d', fechaInvent[this.point.index]) + '</b><br/>'
+                        + 'VehiclesIn: <b>' + vehiclesIn[this.point.index] + '</b><br/>'
+                        + 'VehiclesIn Inventada: <b>' + vehiclesInInvent[this.point.index] + '</b><br/>'
+                        + 'VehiclesOcc: <b>' + vehiclesOcc[this.point.index] + '</b><br/>'
+                        + 'VehiclesOcc Inventada: <b>' + vehiclesOccInvent[this.point.index] + '</b><br/>'
                         return tooltip;
                     }
                     }
