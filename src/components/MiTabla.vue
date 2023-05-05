@@ -1,17 +1,16 @@
 <template>
-  <div>
+
+  <div class="pruebaTabla">
     <h1>Tabla Básica</h1>
     <label for="busqueda">Introduce un número para filtrar: </label>
     <input id="busqueda" v-model="searchText"  placeholder="Buscar...">
 
     <div id="mitabla"></div>
 
-    <br>
+    <p></p>
     <button @click="descargarCSV()">
         Descargar CSV
     </button>
-
-
   </div>
 </template>
 

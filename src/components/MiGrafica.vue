@@ -1,24 +1,17 @@
 <template>
   <div class="prueba" style="width: 100%">
     <div id="container"></div>
-    <Highcharts :options = "chartOptions"></Highcharts>
-    <p>{{ widthChart }}</p>
+
   </div>
 </template>
 
 <script>
 
 import ResizeObserver from "resize-observer-polyfill";
-import { Chart } from "highcharts-vue";
+import Highcharts from "highcharts";
 
 export default {
-  components: {Highcharts: Chart},
-  watch: {
-    width(newVal){
-        this.width = newVal
-    }
-  },
-
+  components: {},
   data() {
     return {
       widthChart: "800",

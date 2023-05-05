@@ -1,6 +1,7 @@
 <style>@import "estilos.css";</style>
 <style>@import "tabulator-tables";</style>
 <style>@import url("https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css");</style>
+
 <template>
   <div id="app">
     <!--<button @click="addWidget()">Añadir Widget</button>-->
@@ -8,6 +9,12 @@
         <div class="grid-stack-item widget" gs-max-w="10" gs-h="10" gs-w="4">
           <div class="grid-stack-item-content">
             <MiGrafica></MiGrafica>
+          
+          </div>
+        </div>
+        <div class="grid-stack-item widget" gs-max-w="10" gs-h="10" gs-w="4">
+          <div class="grid-stack-item-content">
+            <MiTabla></MiTabla>
           
           </div>
         </div>
@@ -20,7 +27,7 @@
 <script>
 
 import MiGrafica from './components/MiGrafica.vue';
-//import MiTabla from './components/MiTabla.vue';
+import MiTabla from './components/MiTabla.vue';
 //import Opinion from './components/Opinion.vue';
 import GridStack from "/node_modules/gridstack/dist/gridstack-h5.js";
 //import ResizeObserver from "resize-observer-polyfill";
@@ -29,7 +36,8 @@ import "gridstack/dist/gridstack.min.css";
 export default {
   name: 'app',
   components:{
-    MiGrafica
+    MiGrafica,
+    MiTabla
   },
       data() {
       return {
