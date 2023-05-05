@@ -8,7 +8,6 @@
 }
 
 .container-table {
-    width: 20rem;
     padding: 2rem;
 }
 
@@ -90,4 +89,9 @@ label {
     padding: 10px;
     background-color: #fff;
     cursor: move;
+}
+
+.prueba {
+    background-color: #4CAF50;
+    height: 100%;
 }
