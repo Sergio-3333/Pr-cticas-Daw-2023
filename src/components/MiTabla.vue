@@ -16,6 +16,8 @@
 
 <script>
   import {TabulatorFull as Tabulator} from 'tabulator-tables';
+  import ResizeObserver from "resize-observer-polyfill";
+
 
   export default {
     components: {  
@@ -24,14 +26,14 @@
       return {
         data: [
           {"id": 1, "afluencia": 1000, "comparacion": 50 }, 
-          {"id": 2, "afluencia": 500, "comparacion": 25 },
+          {"id": 2, "afluencia": 500, "comparacion": 1200 },
           {"id": 3, "afluencia": 750, "comparacion": 35},
           {"id": 4, "afluencia": 1200, "comparacion": 60},
-          {"id": 5, "afluencia": 900, "comparacion": 45},
-          {"id": 6, "afluencia": 1500, "comparacion": 60 },
+          {"id": 5, "afluencia": 900, "comparacion": 1500},
+          {"id": 6, "afluencia": 1500, "comparacion": 1800 },
           {"id": 7, "afluencia": 800, "comparacion": 40},
           {"id": 8, "afluencia": 1100, "comparacion": 55},
-          {"id": 9, "afluencia": 650, "comparacion": 30},
+          {"id": 9, "afluencia": 650, "comparacion": 1400},
           {"id": 10, "afluencia": 950, "comparacion": 0}
         ],
         searchText: ''
@@ -51,6 +53,21 @@
         },
 
     mounted() {
+      const resize_ob = new ResizeObserver((entries) => {
+        let rect = entries[0].contentRect;
+        // current width
+        let currentwidth = rect.width;
+        let currentHeight = rect.height;
+        if (currentwidth < 500) {
+          this.widthChart = currentwidth;
+          this.heightChart = currentHeight - 50;
+        } else {
+          this.widthChart = parseFloat(currentwidth) - 80;
+          this.heightChart = parseFloat(currentHeight) - 30;
+        }
+      });
+      resize_ob.observe(document.querySelector(".prueba"));
+
       this.table = new Tabulator("#mitabla", {
         pagination:true, 
         paginationSize:5,
@@ -62,7 +79,7 @@
         data: this.filteredData,
         initialSort:[
           {column:"afluencia", dir:"desc"}
-        ]
+        ],
       });
     },
 

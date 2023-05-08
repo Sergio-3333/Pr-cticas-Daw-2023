@@ -1,22 +1,18 @@
 <template>
   <div class="prueba" style="width: 100%">
     <div id="container"></div>
-
   </div>
 </template>
 
 <script>
-
 import ResizeObserver from "resize-observer-polyfill";
 import Highcharts from "highcharts";
-
 export default {
   components: {},
   data() {
     return {
       widthChart: "800",
       heightChart: "auto",
-
       data: [
         {
           dataClassId: 9,
@@ -71,7 +67,6 @@ export default {
         { dt: "2023-04-25", hr: 14, vehiclesIn: 49, vehiclesOcc: 9 },
         { dt: "2023-04-25", hr: 15, vehiclesIn: 38, vehiclesOcc: 18 },
       ],
-
       dataInvent: [
         {
           dataClassId: 9,
@@ -128,22 +123,19 @@ export default {
       ],
     };
   },
-
   computed: {
     chartOptions() {
       const fecha = this.data.map((item) => Date.parse(item.dt));
       const vehiclesIn = this.data.map((item) => item.vehiclesIn);
       const vehiclesOcc = this.data.map((item) => item.vehiclesOcc);
-
       const fechaInvent = this.dataInvent.map((item) => Date.parse(item.dt));
       const vehiclesInInvent = this.dataInvent.map((item) => item.vehiclesIn);
       const vehiclesOccInvent = this.dataInvent.map((item) => item.vehiclesOcc);
-
       return {
         chart: {
           zoomType: "x",
-          width: this.widthChart,
-          height: this.heightChart,
+          //width: this.widthChart,  Le quito esto para que la tabla se muestre con todo el ancho del container. Y para hacer que ocupe tambien todo el alto, edito el container en el css poniendo la altura al 100%
+          //height: this.heightChart,
           backgroundColor: "#000000",
         },
         title: {
@@ -168,7 +160,6 @@ export default {
             opposite: true,
           },
         ],
-
         series: [
           {
             name: "VehiclesOcc",
@@ -232,14 +223,10 @@ export default {
       };
     },
   },
-
   mounted() {
-    Highcharts.chart("container", this.chartOptions);
 
     const resize_ob = new ResizeObserver((entries) => {
-      let rect = entries[0].contentRect;
-
-      // current width
+      let rect = entries[0].contentRect; 
 
       let currentwidth = rect.width;
 
@@ -254,6 +241,9 @@ export default {
 
         this.heightChart = parseFloat(currentHeight) - 30;
       }
+
+      Highcharts.chart("container", this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
+
     });
 
     resize_ob.observe(document.querySelector(".prueba"));
