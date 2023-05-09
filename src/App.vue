@@ -1,50 +1,92 @@
 <style>@import "estilos.css";</style>
 <style>@import "tabulator-tables";</style>
+<style>@import url("https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css");</style>
+
 <template>
   <div id="app">
-        <div class="grid-stack" >
-            <div class="grid-stack-item" >
-                <div class="grid-stack-item-content" data-gs-x="1" data-gs-y="1" data-gs-width="4" data-gs-height="4" data-gs-no-resize="true">
-                  <h1>Gráfica</h1>  
-                  <MiGrafica></MiGrafica>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <button @click="addWidget()">Añadir Widget</button>
+    <GridStackLayout>
+      <GridStackItem v-for="(widget, index) in widgets" :key="index" >
+        <component :is="widget.component"></component>
+      </GridStackItem>
+    </GridStackLayout>
+  </div>
 </template>
 
 <script>
 
 import MiGrafica from './components/MiGrafica.vue';
-import { GridStack } from 'gridstack';
-
+import MiTabla from './components/MiTabla.vue';
+import GridStackItem from './components/GridStackItem.vue';
+import GridStackLayout from './components/GridStackLayout.vue';
+import GridStack from "/node_modules/gridstack/dist/gridstack-h5.js";
+import "gridstack/dist/gridstack.min.css";
 
 export default {
   name: 'app',
-  components: {
-    MiGrafica
+  components:{
+    MiGrafica,
+    MiTabla,
+    GridStackItem,
+    GridStackLayout
   },
-  
-
-    mounted() {
-    var options = {
-      cellHeight: 1500,
-      verticalMargin: 10,
-      handle: '.grid-stack-item-content',
-      draggable: true,
-      resizable: {
-        handles: 'e,se,s,sw,w'
-      }
-
-    };
-
-    const grid = GridStack.init(options, '.grid-stack');
-    grid.enableMove(true, true);
-  
-
-      }
+      data() {
+      return {
+        grid: null,
+          options: { 
+            column:12,
+            cellHeight: 50,
+            float: true,
+        resizable: {
+          handles: 'e, se, s, sw, w',
+        
+        }
+      },
+      widgets: [{ component: MiGrafica },{ component: MiTabla }],
+      widgetIndex: 0 //Creo un indice
       
     }
+  }, 
+  
+  mounted() {
+    
+        this.grid = GridStack.init(this.options);
+        
+        },
+
+    methods: {
+      
+      addWidget(){
+        if (this.widgetIndex < 2) { 
+          const component = this.widgetIndex === 0 ? MiGrafica : MiTabla; 
+          const elemento = document.createElement('div');
+            elemento.className = 'grid-stack-item widget';
+            elemento.setAttribute('gs-max-w', '10');
+            elemento.setAttribute('gs-h', '10');
+            elemento.setAttribute('gs-w', '4');
+            elemento.innerHTML = `<div class="grid-stack-item-content">`+{component}+`</div>`;
+          this.grid.addWidget(elemento);
+        }
+      },
+
+
+      /*addWidget() {
+        if (this.widgetIndex < this.widgets.length) {
+        const widget = {
+          component: this.widgetIndex === 0 ? <MiGrafica></MiGrafica> : <MiTabla></MiTabla>,
+        };
+        
+        const elemento = document.createElement('div');
+        elemento.className = 'grid-stack-item widget';
+        elemento.setAttribute('gs-max-w', '10');
+        elemento.setAttribute('gs-h', '10');
+        elemento.setAttribute('gs-w', '4');
+        elemento.innerHTML = `<div class="grid-stack-item-content"><component :is="` + widget.component + `"></component></div>`;
+        this.grid.addWidget(elemento);
+      }
+      },
+*/
+      }
+}
 
 </script>

@@ -1,22 +1,23 @@
 <template>
-  <div>
+
+  <div class="pruebaTabla">
     <h1>Tabla Básica</h1>
     <label for="busqueda">Introduce un número para filtrar: </label>
     <input id="busqueda" v-model="searchText"  placeholder="Buscar...">
 
     <div id="mitabla"></div>
 
-    <br>
+    <p></p>
     <button @click="descargarCSV()">
         Descargar CSV
     </button>
-
-
   </div>
 </template>
 
 <script>
   import {TabulatorFull as Tabulator} from 'tabulator-tables';
+  import ResizeObserver from "resize-observer-polyfill";
+
 
   export default {
     components: {  
@@ -25,14 +26,14 @@
       return {
         data: [
           {"id": 1, "afluencia": 1000, "comparacion": 50 }, 
-          {"id": 2, "afluencia": 500, "comparacion": 25 },
+          {"id": 2, "afluencia": 500, "comparacion": 1200 },
           {"id": 3, "afluencia": 750, "comparacion": 35},
           {"id": 4, "afluencia": 1200, "comparacion": 60},
-          {"id": 5, "afluencia": 900, "comparacion": 45},
-          {"id": 6, "afluencia": 1500, "comparacion": 60 },
+          {"id": 5, "afluencia": 900, "comparacion": 1500},
+          {"id": 6, "afluencia": 1500, "comparacion": 1800 },
           {"id": 7, "afluencia": 800, "comparacion": 40},
           {"id": 8, "afluencia": 1100, "comparacion": 55},
-          {"id": 9, "afluencia": 650, "comparacion": 30},
+          {"id": 9, "afluencia": 650, "comparacion": 1400},
           {"id": 10, "afluencia": 950, "comparacion": 0}
         ],
         searchText: ''
@@ -52,6 +53,21 @@
         },
 
     mounted() {
+      const resize_ob = new ResizeObserver((entries) => {
+        let rect = entries[0].contentRect;
+        // current width
+        let currentwidth = rect.width;
+        let currentHeight = rect.height;
+        if (currentwidth < 500) {
+          this.widthChart = currentwidth;
+          this.heightChart = currentHeight - 50;
+        } else {
+          this.widthChart = parseFloat(currentwidth) - 80;
+          this.heightChart = parseFloat(currentHeight) - 30;
+        }
+      });
+      resize_ob.observe(document.querySelector(".prueba"));
+
       this.table = new Tabulator("#mitabla", {
         pagination:true, 
         paginationSize:5,
@@ -63,7 +79,7 @@
         data: this.filteredData,
         initialSort:[
           {column:"afluencia", dir:"desc"}
-        ]
+        ],
       });
     },
 
@@ -102,3 +118,39 @@
     }
   };
 </script>
+
+<style>
+.pruebaTabla {
+    height: 100%;
+    /*El eje X está en auto para que aparezca en funcion de los cambios o no, a diferencia del eje Y que es el lateral que siempre va a esar oculto*/
+    overflow-x: auto;
+    overflow-y: scroll;
+}
+
+/*Con esta pseudoclase, defino la altura, el ancho etc (Documentacion en W3C) */
+
+.pruebaTabla::-webkit-scrollbar {
+    height: 10px;
+    width: 0;
+}
+
+
+/*Y con esta, a parte de poder definir el color, lo que hace eso definir por defecto el tamaño de la barra de desplazamiento en funcion del tamaño de la web*/
+
+.pruebaTabla::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}
+
+/*En la Grafica no funciona porque no es dinamica, entonces como no cambia segun el tamaño el programa no lo reconoce y se queda quieto el scrollbar inferior.
+En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace funcionar el scrollbar correctamente*/
+
+.prueba::-webkit-scrollbar-thumb {
+    background-color: #ff0000;
+}
+
+.prueba::-webkit-scrollbar {
+    height: 10px;
+    width: 0;
+}
+
+</style>
