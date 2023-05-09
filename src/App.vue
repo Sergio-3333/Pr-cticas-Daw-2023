@@ -68,25 +68,8 @@ export default {
           this.grid.addWidget(elemento);
         }
       },
-
-
-      /*addWidget() {
-        if (this.widgetIndex < this.widgets.length) {
-        const widget = {
-          component: this.widgetIndex === 0 ? <MiGrafica></MiGrafica> : <MiTabla></MiTabla>,
-        };
-        
-        const elemento = document.createElement('div');
-        elemento.className = 'grid-stack-item widget';
-        elemento.setAttribute('gs-max-w', '10');
-        elemento.setAttribute('gs-h', '10');
-        elemento.setAttribute('gs-w', '4');
-        elemento.innerHTML = `<div class="grid-stack-item-content"><component :is="` + widget.component + `"></component></div>`;
-        this.grid.addWidget(elemento);
       }
-      },
-*/
-      }
+
 }
 
 </script>
