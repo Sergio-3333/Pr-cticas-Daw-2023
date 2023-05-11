@@ -6,14 +6,7 @@
 
 <script>
 export default {
-  name: 'GridStackItem',
-  props: {
-    id: Number,
-    x: Number,
-    y: Number,
-    width: Number,
-    height: Number,
-  },
+  name: 'GridStackItem'
 };
 </script>
 

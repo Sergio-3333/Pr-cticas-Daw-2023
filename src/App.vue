@@ -37,6 +37,7 @@ export default {
           options: { 
             column:12,
             cellHeight: 50,
+            float:true,
 
         resizable: {
           handles: 'e, se, s, sw, w',
@@ -58,7 +59,7 @@ export default {
     methods: {
       
       addWidgetGrafica(){
-        const optionsGrafica = {x: 0, y: 0, h: 2, w:4, typeWidget:MiGrafica};
+        const optionsGrafica = {x: 0, y: 0, w:4, typeWidget:MiGrafica};
 
         this.widgets.push(optionsGrafica);
       },
