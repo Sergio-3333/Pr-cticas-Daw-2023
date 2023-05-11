@@ -13,7 +13,6 @@
     </GridStackLayout>
   </div>
 </template>
-
 <script>
 
 import MiGrafica from './components/MiGrafica.vue';
