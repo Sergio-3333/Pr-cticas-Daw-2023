@@ -118,39 +118,3 @@
     }
   };
 </script>
-
-<style>
-.pruebaTabla {
-    height: 100%;
-    /*El eje X está en auto para que aparezca en funcion de los cambios o no, a diferencia del eje Y que es el lateral que siempre va a esar oculto*/
-    overflow-x: auto;
-    overflow-y: scroll;
-}
-
-/*Con esta pseudoclase, defino la altura, el ancho etc (Documentacion en W3C) */
-
-.pruebaTabla::-webkit-scrollbar {
-    height: 10px;
-    width: 0;
-}
-
-
-/*Y con esta, a parte de poder definir el color, lo que hace eso definir por defecto el tamaño de la barra de desplazamiento en funcion del tamaño de la web*/
-
-.pruebaTabla::-webkit-scrollbar-thumb {
-    background-color: #000000;
-}
-
-/*En la Grafica no funciona porque no es dinamica, entonces como no cambia segun el tamaño el programa no lo reconoce y se queda quieto el scrollbar inferior.
-En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace funcionar el scrollbar correctamente*/
-
-.prueba::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-}
-
-.prueba::-webkit-scrollbar {
-    height: 10px;
-    width: 0;
-}
-
-</style>

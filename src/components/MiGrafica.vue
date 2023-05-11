@@ -250,17 +250,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.prueba {
-    background-color: #4CAF50;
-    width: 100%;
-    height: 100%;
-    overflow-x: auto;
-    overflow-y: scroll;
-}
-
-#container {
-    height: 100%;
-}
-</style>
