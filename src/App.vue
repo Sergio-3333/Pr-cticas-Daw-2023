@@ -37,7 +37,7 @@ export default {
           options: { 
             column:12,
             cellHeight: 50,
-            float:true,
+            float: true,
 
         resizable: {
           handles: 'e, se, s, sw, w',
