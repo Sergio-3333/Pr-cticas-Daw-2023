@@ -8,8 +8,7 @@
   export default {
     name: 'GridStackLayout',
   components:{
-  },
-
+  }
   }
   </script>
   
@@ -17,7 +16,8 @@
 
 .grid-stack {
     background-color: red;
-    margin-top: 0%;
+    width: 100%;
+    height: 500px;
 }
 
   </style>

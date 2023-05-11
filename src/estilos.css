@@ -80,10 +80,8 @@ label {
 }
 .grid-stack-item-content {
   border: 1px solid #ccc;
-  border-radius: 5px;
   background-color: #fff;
   cursor: move;
-  overflow-y: hidden;
 }
 
 

@@ -1,10 +1,28 @@
 <template>
-    <div class="grid-stack-item widget" :gs-max-w="maxWidth" :gs-h="height" :gs-w="width"><!--Los dos puntos son para poder enlazar la propiedad width o height con el atributo gs-h-->
-      <div class="grid-stack-item-content" :style="{ overflowY:  noScroll ? 'hidden' : 'auto', }">
-        <slot></slot>
-      </div>
-    </div>
-  </template>
+  <div :data-gs-id="id" :data-gs-x="x" :data-gs-y="y" :data-gs-width="width" :data-gs-height="height" class="grid-stack-item">
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'GridStackItem',
+  props: {
+    id: Number,
+    x: Number,
+    y: Number,
+    width: Number,
+    height: Number,
+  },
+};
+</script>
+
+<style scoped>
+div {
+  border: 1px solid #ccc;
+}
+</style>
+
   
   <script>
 

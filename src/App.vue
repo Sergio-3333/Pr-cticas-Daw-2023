@@ -4,10 +4,11 @@
 
 <template>
   <div id="app">
-    <button @click="addWidget()">Añadir Widget</button>
+    <button @click="addWidgetGrafica()">Añadir Grafica</button>
+    <button @click="addWidgetTabla()">Añadir Tabla</button>
     <GridStackLayout>
-      <GridStackItem v-for="(widget, index) in widgets" :key="index" >
-        <component :is="widget.component"></component>
+      <GridStackItem v-for="(widget, index) in widgets" :key="index" :gs-x="widget.x" :gs-y="widget.y" :gs-h="widget.h" :gs-w="widget.w" >
+        <component :is="widget.typeWidget"></component>
       </GridStackItem>
     </GridStackLayout>
   </div>
@@ -36,13 +37,13 @@ export default {
           options: { 
             column:12,
             cellHeight: 50,
-            float: true,
+
         resizable: {
           handles: 'e, se, s, sw, w',
         
         }
       },
-      widgets: [{ component: MiGrafica },{ component: MiTabla }],
+      widgets: [],
       widgetIndex: 0 //Creo un indice
       
     }
@@ -56,18 +57,18 @@ export default {
 
     methods: {
       
-      addWidget(){
-        if (this.widgetIndex < 2) { 
-          const component = this.widgetIndex === 0 ? MiGrafica : MiTabla; 
-          const elemento = document.createElement('div');
-            elemento.className = 'grid-stack-item widget';
-            elemento.setAttribute('gs-max-w', '10');
-            elemento.setAttribute('gs-h', '10');
-            elemento.setAttribute('gs-w', '4');
-            elemento.innerHTML = `<div class="grid-stack-item-content">`+{component}+`</div>`;
-          this.grid.addWidget(elemento);
-        }
+      addWidgetGrafica(){
+        const optionsGrafica = {x: 0, y: 0, h: 2, w:4, typeWidget:MiGrafica};
+
+        this.widgets.push(optionsGrafica);
       },
+      addWidgetTabla(){
+        const optionsTabla = {x: 4, y: 4, h: 2, w:4, typeWidget:MiTabla};
+
+        this.widgets.push(optionsTabla);
+      },
+
+
       }
 
 }
