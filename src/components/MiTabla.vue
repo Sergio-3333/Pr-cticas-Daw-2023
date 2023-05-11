@@ -66,7 +66,7 @@
           this.heightChart = parseFloat(currentHeight) - 30;
         }
       });
-      resize_ob.observe(document.querySelector(".pruebaTabla"));
+      resize_ob.observe(document.querySelector(".prueba"));
 
       this.table = new Tabulator("#mitabla", {
         pagination:true, 
