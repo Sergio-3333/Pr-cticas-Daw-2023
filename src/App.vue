@@ -36,7 +36,8 @@ export default {
         grid: null,
           options: { 
             column:12,
-            cellHeight: 50,
+            cellHeight: 500,
+            float: true,
 
         resizable: {
           handles: 'e, se, s, sw, w',
