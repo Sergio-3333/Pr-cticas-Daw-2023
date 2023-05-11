@@ -36,7 +36,6 @@ export default {
         options: { 
             column:12,
             cellHeight: 500,
-            verticalMargin: 10,
             float: true,
         resizable: {
           handles: 'e, se, s, sw, w',
