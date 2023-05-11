@@ -7,8 +7,28 @@
 </template>
 
 <script>
+import GridStack from "/node_modules/gridstack/dist/gridstack-h5.js"
 export default {
   name: 'GridStackItem',
+  data() {
+      return {
+        grid: null,
+        options: { 
+            column:12,
+            cellHeight: 50,
+            float: true,
+            enableMove: true,
+            enableResize:true,
+          
+        resizable: {
+          handles: 'e, se, s, sw, w',
+        }
+      },
+    }
+  }, 
+  mounted() {
+        this.grid = GridStack.init(this.options);
+        },
 };
 </script>
 
