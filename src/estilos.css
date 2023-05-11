@@ -111,17 +111,20 @@ En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace
     background-color: #000000;
 }
 
-.grid-stack {
-    background-color: red;
-    margin-top: 0%;
-}
-
 .grid-stack-item {
     background-color: mediumpurple;
 }
 
 .grid-stack-item-content {
     border: 1px solid #ccc;
+    border-radius: 5px;
     background-color: #fff;
     cursor: move;
+    overflow-y: hidden;
+}
+
+.grid-stack {
+    background-color: red;
+    width: 100%;
+    height: 500px;
 }
