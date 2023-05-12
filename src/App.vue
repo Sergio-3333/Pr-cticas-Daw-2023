@@ -43,7 +43,7 @@ export default {
         this.widgets.push(optionsGrafica);
       },
       addWidgetTabla(){
-        const optionsTabla = {x: 8, y: 4, h: 2, w:4, typeWidget:MiTabla};
+        const optionsTabla = {x: 4, y: 4, h: 2, w:4, typeWidget:MiTabla};
 
         this.widgets.push(optionsTabla);
       },

@@ -26,8 +26,20 @@ export default {
       },
     }
   }, 
+
+  methods:{
+
+    iniciarGridStack(){
+
+      this.grid = GridStack.init(this.options);
+      this.grid.addWidget(this.$el); //Uso el this.$el para que gridStack agregue todos los widgets creados al div de gridstack-item y con todas sus opciones de grid
+    }
+    
+  },
+
   mounted() {
-        this.grid = GridStack.init(this.options);
+    this.iniciarGridStack();
+        
         },
 };
 </script>
