@@ -6,6 +6,8 @@
   <div id="app">
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
+    <div id="borrar"> Borrar Widget</div>    
+
     <GridStackLayout>
       <GridStackItem v-for="(widget, index) in widgets" :key="index" :gs-x="widget.x" :gs-y="widget.y" :gs-h="widget.h" :gs-w="widget.w" >
         <component :is="widget.typeWidget"></component>
@@ -38,17 +40,17 @@ export default {
     methods: {
       
       addWidgetGrafica(){
-        const optionsGrafica = {x: 0, y: 0, w:4, typeWidget:MiGrafica};
+        const optionsGrafica = {id: Date.now(), x: 0, y: 0, w:4, typeWidget:MiGrafica};
 
         this.widgets.push(optionsGrafica);
       },
       addWidgetTabla(){
-        const optionsTabla = {x: 4, y: 4, h: 2, w:4, typeWidget:MiTabla};
+        const optionsTabla = {id: Date.now(), x: 4, y: 4, h: 2, w:4, typeWidget:MiTabla};
 
         this.widgets.push(optionsTabla);
-      },
-
       }
+
+    }
 
 }
 

@@ -134,3 +134,18 @@ En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace
     width: 100%;
     height: 500px;
 }
+
+#borrar {
+    width: 100%;
+    height: 200px;
+    background-color: deepskyblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 2px solid gray;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
