@@ -69,7 +69,7 @@
       });
       resize_ob.observe(document.querySelector(".pruebaTabla"));
 
-      this.table = new Tabulator(`#${this.mitabla}`, {
+      this.table = new Tabulator(`#${this.mitabla}`, { //En tabulator la iniciacion es diferente a la de hightcharts. La de Hightcharts es mas sencilla
         pagination:true, 
         paginationSize:5,
         columns: [

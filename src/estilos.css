@@ -69,7 +69,7 @@ label {
     font-weight: bold;
 }
 
-#container {
+.container {
     height: 100%;
     width: 95%;
 }

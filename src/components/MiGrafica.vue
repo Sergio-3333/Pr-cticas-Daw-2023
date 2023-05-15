@@ -1,6 +1,6 @@
 <template>
   <div class="prueba" style="width: 100%">
-    <div id="container"></div>
+    <div :id="container" class="container"></div>
   </div>
 </template>
 
@@ -8,9 +8,9 @@
 import ResizeObserver from "resize-observer-polyfill";
 import Highcharts from "highcharts";
 export default {
-  components: {},
   data() {
     return {
+      container: `grafica-${this._uid}`,
       widthChart: "800",
       heightChart: "auto",
       data: [
@@ -242,7 +242,7 @@ export default {
         this.heightChart = parseFloat(currentHeight) - 30;
       }
 
-      Highcharts.chart("container", this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
+      Highcharts.chart(this.container, this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
 
     });
 
