@@ -5,7 +5,7 @@
     <label for="busqueda">Introduce un número para filtrar: </label>
     <input id="busqueda" v-model="searchText"  placeholder="Buscar...">
 
-    <div id="mitabla"></div>
+    <div :id="mitabla" class="mitabla"></div> <!--Creo un ID dinamico-->
 
     <p></p>
     <button @click="descargarCSV()">
@@ -24,7 +24,8 @@
     },
     data() {
       return {
-        data: [
+        mitabla: `tabla-${this._uid}`, //El this._uid lo que hace es asignarle un valor diferente a cada tabla que se vaya a crear. Por defecto, html no reconoce dos elementos con el mismo id
+        data: [                         //asique hay que establecerles uno a cada tabla. El prefijo sirve para evitar problemas entre ids como por ejemplo que no se apliquen estilos, que seleccione elementos diferentes, etc
           {"id": 1, "afluencia": 1000, "comparacion": 50 }, 
           {"id": 2, "afluencia": 500, "comparacion": 1200 },
           {"id": 3, "afluencia": 750, "comparacion": 35},
@@ -68,7 +69,7 @@
       });
       resize_ob.observe(document.querySelector(".pruebaTabla"));
 
-      this.table = new Tabulator("#mitabla", {
+      this.table = new Tabulator(`#${this.mitabla}`, {
         pagination:true, 
         paginationSize:5,
         columns: [

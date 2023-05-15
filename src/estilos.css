@@ -7,7 +7,7 @@
     margin-top: 10%;
 }
 
-#mitabla {
+.mitabla {
     margin: 0 auto;
     border: 1px solid #ccc;
     font-family: Arial, sans-serif;
@@ -15,7 +15,7 @@
     width: 16.91rem;
 }
 
-#mitabla .tabulator-col {
+.mitabla .tabulator-col {
     border-right: 1px solid #ccc;
     padding: 8px;
 }
