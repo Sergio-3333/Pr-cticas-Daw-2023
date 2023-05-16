@@ -1,5 +1,9 @@
 <template>
   <div class="prueba" style="width: 100%">
+    <div class="buscar">
+      <input type="text" v-model="rangoFechas" placeholder="Selecciona un rango de fechas">
+      <button class="fechas" @click="filtrarDatos">Filtrar</button>
+    </div>
     <div :id="container" class="container"></div>
   </div>
 </template>
@@ -7,18 +11,17 @@
 <script>
 import ResizeObserver from "resize-observer-polyfill";
 import Highcharts from "highcharts";
+import { isWithinInterval, parseISO  } from "date-fns";
 export default {
-  props: {
-    rangoFechas: {
-      type: String,
-      required: true
-    }
-  },
   data() {
     return {
       container: `grafica-${this._uid}`,
       widthChart: "800",
       heightChart: "auto",
+      fechaInicio: "",
+      fechaFin: "",
+      rangoFechas: [],
+      filteredData: [],
       data: [
         {
           dataClassId: 9,
@@ -130,24 +133,13 @@ export default {
     };
   },
   computed: {
-    
-    filteredData() {
-      const fecha1 = this.rangoFechas;
-      return this.data.filter(item => item.dt === fecha1);
-    },
-
-    filteredDataInvent() {
-      const fecha2 = this.rangoFechas;
-      return this.dataInvent.filter(item => item.dt === fecha2);
-    },
-
     chartOptions() {
-       const fecha = this.filteredData.map(item => Date.parse(item.dt));
-      const vehiclesIn = this.filteredData.map(item => item.vehiclesIn);
-      const vehiclesOcc = this.filteredData.map(item => item.vehiclesOcc);
-      const fechaInvent = this.filteredDataInvent.map(item => Date.parse(item.dt));
-      const vehiclesInInvent = this.filteredDataInvent.map(item => item.vehiclesIn);
-      const vehiclesOccInvent = this.filteredDataInvent.map(item => item.vehiclesOcc);
+      const fecha = this.data.map((item) => Date.parse(item.dt));
+      const vehiclesIn = this.data.map((item) => item.vehiclesIn);
+      const vehiclesOcc = this.data.map((item) => item.vehiclesOcc);
+      const fechaInvent = this.dataInvent.map((item) => Date.parse(item.dt));
+      const vehiclesInInvent = this.dataInvent.map((item) => item.vehiclesIn);
+      const vehiclesOccInvent = this.dataInvent.map((item) => item.vehiclesOcc);
       return {
         chart: {
           zoomType: "x",
@@ -265,5 +257,41 @@ export default {
 
     resize_ob.observe(document.querySelector(".prueba"));
   },
+
+  methods: {
+    filtrarDatos() {
+
+      //2023-01-12 - 2023-05-20
+
+      const fechaInicio = parseISO(this.fechaInicio); //Defino las fechas de inicio y fin
+      const fechaFin = parseISO(this.fechaFin);
+
+        this.rangoFechas = fechaInicio - fechaFin; //Las meto en el v-model
+
+        const datosFiltrados = []; //Creo una variable para almacenar las fechas escritas
+
+        // Filtrar en el primer JSON
+        for (const item of this.data) {
+          const fechaItem = parseISO(item.fecha);
+          if (isWithinInterval(fechaItem, { start: fechaInicio, end: fechaFin })) {
+            datosFiltrados.push(item);
+          }
+        }
+
+        // Filtrar en el segundo JSON
+        for (const item of this.dataInvent) {
+          const fechaItem = parseISO(item.fechaInvent);
+          if (isWithinInterval(fechaItem, { start: fechaInicio, end: fechaFin })) {
+            datosFiltrados.push(item);
+          }
+        }
+
+        // Los guardo en filteredData para que se suban los cambios y se guarden
+        this.filteredData = datosFiltrados;
+      
+    }
+  }
+
+
 };
 </script>

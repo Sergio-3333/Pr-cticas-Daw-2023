@@ -4,11 +4,6 @@
 
 <template>
   <div id="app">
-    <div>
-      <label for="rangoFechas">Rango de fechas:</label>
-      <input type="date" id="rangoFechas" v-model="rangoFechas">
-    </div>
-
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
     <div id="borrar"> Borrar Widget</div>    
