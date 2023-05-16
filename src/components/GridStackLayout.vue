@@ -1,12 +1,14 @@
 <template>
-    <div class="grid-stack">
-        <slot></slot>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'GridStackLayout',
+  <div class="grid-stack">
+      <slot></slot>
+  </div>
+</template>
 
-  }
-  </script>
+<script>
+export default {
+  name: 'GridStackLayout',
+
+}
+</script>
+
+

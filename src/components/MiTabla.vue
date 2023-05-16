@@ -5,7 +5,7 @@
     <label for="busqueda">Introduce un número para filtrar: </label>
     <input id="busqueda" v-model="searchText"  placeholder="Buscar...">
 
-    <div id="mitabla"></div>
+    <div :id="mitabla" class="mitabla"></div> <!--Creo un ID dinamico-->
 
     <p></p>
     <button @click="descargarCSV()">
@@ -24,7 +24,8 @@
     },
     data() {
       return {
-        data: [
+        mitabla: `tabla-${this._uid}`, //El this._uid lo que hace es asignarle un valor diferente a cada tabla que se vaya a crear. Por defecto, html no reconoce dos elementos con el mismo id
+        data: [                         //asique hay que establecerles uno a cada tabla. El prefijo sirve para evitar problemas entre ids como por ejemplo que no se apliquen estilos, que seleccione elementos diferentes, etc
           {"id": 1, "afluencia": 1000, "comparacion": 50 }, 
           {"id": 2, "afluencia": 500, "comparacion": 1200 },
           {"id": 3, "afluencia": 750, "comparacion": 35},
@@ -66,9 +67,9 @@
           this.heightChart = parseFloat(currentHeight) - 30;
         }
       });
-      resize_ob.observe(document.querySelector(".prueba"));
+      resize_ob.observe(document.querySelector(".pruebaTabla"));
 
-      this.table = new Tabulator("#mitabla", {
+      this.table = new Tabulator(`#${this.mitabla}`, { //En tabulator la iniciacion es diferente a la de hightcharts. La de Hightcharts es mas sencilla
         pagination:true, 
         paginationSize:5,
         columns: [
@@ -118,39 +119,3 @@
     }
   };
 </script>
-
-<style>
-.pruebaTabla {
-    height: 100%;
-    /*El eje X está en auto para que aparezca en funcion de los cambios o no, a diferencia del eje Y que es el lateral que siempre va a esar oculto*/
-    overflow-x: auto;
-    overflow-y: scroll;
-}
-
-/*Con esta pseudoclase, defino la altura, el ancho etc (Documentacion en W3C) */
-
-.pruebaTabla::-webkit-scrollbar {
-    height: 10px;
-    width: 0;
-}
-
-
-/*Y con esta, a parte de poder definir el color, lo que hace eso definir por defecto el tamaño de la barra de desplazamiento en funcion del tamaño de la web*/
-
-.pruebaTabla::-webkit-scrollbar-thumb {
-    background-color: #000000;
-}
-
-/*En la Grafica no funciona porque no es dinamica, entonces como no cambia segun el tamaño el programa no lo reconoce y se queda quieto el scrollbar inferior.
-En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace funcionar el scrollbar correctamente*/
-
-.prueba::-webkit-scrollbar-thumb {
-    background-color: #ff0000;
-}
-
-.prueba::-webkit-scrollbar {
-    height: 10px;
-    width: 0;
-}
-
-</style>

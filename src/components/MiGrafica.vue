@@ -1,6 +1,6 @@
 <template>
   <div class="prueba" style="width: 100%">
-    <div id="container"></div>
+    <div :id="container" class="container"></div>
   </div>
 </template>
 
@@ -8,9 +8,15 @@
 import ResizeObserver from "resize-observer-polyfill";
 import Highcharts from "highcharts";
 export default {
-  components: {},
+  props: {
+    rangoFechas: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
+      container: `grafica-${this._uid}`,
       widthChart: "800",
       heightChart: "auto",
       data: [
@@ -124,13 +130,24 @@ export default {
     };
   },
   computed: {
+    
+    filteredData() {
+      const fecha1 = this.rangoFechas;
+      return this.data.filter(item => item.dt === fecha1);
+    },
+
+    filteredDataInvent() {
+      const fecha2 = this.rangoFechas;
+      return this.dataInvent.filter(item => item.dt === fecha2);
+    },
+
     chartOptions() {
-      const fecha = this.data.map((item) => Date.parse(item.dt));
-      const vehiclesIn = this.data.map((item) => item.vehiclesIn);
-      const vehiclesOcc = this.data.map((item) => item.vehiclesOcc);
-      const fechaInvent = this.dataInvent.map((item) => Date.parse(item.dt));
-      const vehiclesInInvent = this.dataInvent.map((item) => item.vehiclesIn);
-      const vehiclesOccInvent = this.dataInvent.map((item) => item.vehiclesOcc);
+       const fecha = this.filteredData.map(item => Date.parse(item.dt));
+      const vehiclesIn = this.filteredData.map(item => item.vehiclesIn);
+      const vehiclesOcc = this.filteredData.map(item => item.vehiclesOcc);
+      const fechaInvent = this.filteredDataInvent.map(item => Date.parse(item.dt));
+      const vehiclesInInvent = this.filteredDataInvent.map(item => item.vehiclesIn);
+      const vehiclesOccInvent = this.filteredDataInvent.map(item => item.vehiclesOcc);
       return {
         chart: {
           zoomType: "x",
@@ -242,7 +259,7 @@ export default {
         this.heightChart = parseFloat(currentHeight) - 30;
       }
 
-      Highcharts.chart("container", this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
+      Highcharts.chart(this.container, this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
 
     });
 
@@ -250,17 +267,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.prueba {
-    background-color: #4CAF50;
-    width: 100%;
-    height: 100%;
-    overflow-x: auto;
-    overflow-y: scroll;
-}
-
-#container {
-    height: 100%;
-}
-</style>
