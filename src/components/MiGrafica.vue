@@ -1,9 +1,5 @@
 <template>
   <div class="prueba" style="width: 100%">
-    <div class="buscar">
-      <input type="text" v-model="rangoFechas" placeholder="Selecciona un rango de fechas">
-      <button class="fechas" @click="filtrarDatos">Filtrar</button>
-    </div>
     <div :id="container" class="container"></div>
   </div>
 </template>
@@ -11,17 +7,15 @@
 <script>
 import ResizeObserver from "resize-observer-polyfill";
 import Highcharts from "highcharts";
-import { isWithinInterval, parseISO  } from "date-fns";
+import { parse, isWithinInterval } from 'date-fns';
 export default {
+  props:['rangoFechas'],
   data() {
     return {
       container: `grafica-${this._uid}`,
       widthChart: "800",
       heightChart: "auto",
-      fechaInicio: "",
-      fechaFin: "",
-      rangoFechas: [],
-      filteredData: [],
+      datosFiltrados: [], //variable para guardar las fechas
       data: [
         {
           dataClassId: 9,
@@ -76,6 +70,8 @@ export default {
         { dt: "2023-04-25", hr: 14, vehiclesIn: 49, vehiclesOcc: 9 },
         { dt: "2023-04-25", hr: 15, vehiclesIn: 38, vehiclesOcc: 18 },
       ],
+
+      
       dataInvent: [
         {
           dataClassId: 9,
@@ -259,38 +255,31 @@ export default {
   },
 
   methods: {
-    filtrarDatos() {
 
-      //2023-01-12 - 2023-05-20
-
-      const fechaInicio = parseISO(this.fechaInicio); //Defino las fechas de inicio y fin
-      const fechaFin = parseISO(this.fechaFin);
-
-        this.rangoFechas = fechaInicio - fechaFin; //Las meto en el v-model
-
-        const datosFiltrados = []; //Creo una variable para almacenar las fechas escritas
-
-        // Filtrar en el primer JSON
-        for (const item of this.data) {
-          const fechaItem = parseISO(item.fecha);
-          if (isWithinInterval(fechaItem, { start: fechaInicio, end: fechaFin })) {
-            datosFiltrados.push(item);
-          }
-        }
-
-        // Filtrar en el segundo JSON
-        for (const item of this.dataInvent) {
-          const fechaItem = parseISO(item.fechaInvent);
-          if (isWithinInterval(fechaItem, { start: fechaInicio, end: fechaFin })) {
-            datosFiltrados.push(item);
-          }
-        }
-
-        // Los guardo en filteredData para que se suban los cambios y se guarden
-        this.filteredData = datosFiltrados;
+    actualizarGrafica() {
+      const [fechaInicial, fechaFinal] = this.rangoFechas.split(' '); //Creo dos constantes que seran las fechas, y las separo con un espacio
+      const parsedFechaInicial = parse(fechaInicial, 'yyyy-MM-dd', new Date()); //creo otras dos constantes de fechas y las formateo
+      const parsedFechaFinal = parse(fechaFinal, 'yyyy-MM-dd', new Date());
       
-    }
-  }
+      const combinedData = [...this.data, ...this.dataInvent] //Combino los dos arreglos
+
+      this.datosFiltrados = combinedData.filter((item) =>//Con esto, filtro los datos combinados basados en el rango de las fechas escritas
+        isWithinInterval(new Date(item.fecha), {  //Aqui uso la propiedad de la documentacion y el primer valor le pongo la constante en la que defino la primera fecha y el segundo valor lo mismo pero con la segunda
+          start: parsedFechaInicial,
+          end: parsedFechaFinal,
+        })
+      );
+    },
+
+      // 2023-01-01 2023-01-31  Fecha para probar
+
+  },
+
+  watch: {
+    rangoFechas() {
+      this.actualizarGrafica();  //Utilizo el watch para que la grafica se actualice cuando cambie de fecha
+    },
+  },
 
 
 };

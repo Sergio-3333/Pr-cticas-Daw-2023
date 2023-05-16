@@ -4,6 +4,8 @@
 
 <template>
   <div id="app">
+
+    <input type="text" v-model="rangoFechas" placeholder="2023-01-01 2023-01-31" class="date-input"> <!--Creo el input para meter las fechas-->
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
     <div id="borrar"> Borrar Widget</div>    
@@ -34,23 +36,24 @@ export default {
   },
       data() {
       return {
+        rangoFechas: '', //Defino el v-model vacio
         widgets: []
     }
   }, 
     methods: {
       
       addWidgetGrafica(){
-        const optionsGrafica = {id: Date.now(), x: 0, y: 0, w:4, typeWidget:MiGrafica};
+        const optionsGrafica = {x: 0, y: 0, w:4, typeWidget:MiGrafica};
 
         this.widgets.push(optionsGrafica);
       },
       addWidgetTabla(){
-        const optionsTabla = {id: Date.now(), x: 4, y: 4, h: 10, w:4, typeWidget:MiTabla};
+        const optionsTabla = {x: 4, y: 4, h: 10, w:4, typeWidget:MiTabla};
 
         this.widgets.push(optionsTabla);
       }
-
     }
+
 
 }
 

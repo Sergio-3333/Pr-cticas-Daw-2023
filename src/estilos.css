@@ -150,38 +150,10 @@ En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace
     font-size: 18px;
 }
 
-.buscar {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.buscar label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.buscar input[type="date"] {
+.date-input {
+    width: 200px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
-    width: 200px;
-}
-
-button.fechas {
-    padding: 8px 16px;
-    background-color: #ff6a34;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button.fechas:hover {
-    background-color: #540000;
-}
-
-button.fechas:focus {
-    outline: none;
+    font-size: 16px;
 }
