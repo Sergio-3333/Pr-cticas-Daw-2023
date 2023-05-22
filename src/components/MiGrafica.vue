@@ -7,15 +7,14 @@
 <script>
 import ResizeObserver from "resize-observer-polyfill";
 import Highcharts from "highcharts";
-import { parse, isWithinInterval } from 'date-fns';
+
 export default {
-  props:['rangoFechas'],
   data() {
     return {
       container: `grafica-${this._uid}`,
       widthChart: "800",
       heightChart: "auto",
-      datosFiltrados: [], //variable para guardar las fechas
+      rangoFechas: [], //Creo el objeto de las fechas del v-model
       data: [
         {
           dataClassId: 9,
@@ -228,8 +227,8 @@ export default {
       };
     },
   },
+  
   mounted() {
-
     const resize_ob = new ResizeObserver((entries) => {
       let rect = entries[0].contentRect; 
 
@@ -245,42 +244,49 @@ export default {
         this.widthChart = parseFloat(currentwidth) - 80;
 
         this.heightChart = parseFloat(currentHeight) - 30;
-      }
+      }      
 
       Highcharts.chart(this.container, this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
 
     });
 
     resize_ob.observe(document.querySelector(".prueba"));
+
   },
+  
 
   methods: {
+    
+    actualizarGrafica(){ //Metodo para actualizar la grafica
 
-    actualizarGrafica() {
-      const [fechaInicial, fechaFinal] = this.rangoFechas.split(' '); //Creo dos constantes que seran las fechas, y las separo con un espacio
-      const parsedFechaInicial = parse(fechaInicial, 'yyyy-MM-dd', new Date()); //creo otras dos constantes de fechas y las formateo
-      const parsedFechaFinal = parse(fechaFinal, 'yyyy-MM-dd', new Date());
+      if(this.rangoFechas && this.rangoFechas.length === 2){ //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
+
+        const fechaInicio = Date.parse(this.rangoFechas[0]); //primera fecha parseada para que reconozca el formato
+        const fechaFin = Date.parse(this.rangoFechas[1]); //segunda fecha
+
+        const fechaInicioFormateada = Highcharts.dateFormat("%Y-%m-%d", fechaInicio); //primera fecha formateada para que reconozca el formato de hightcharts (esto no se si hace falta)
+        const fechaFinFormateada = Highcharts.dateFormat("%Y-%m-%d", fechaFin);
+
+        this.data = this.data.filter(item => { //Recorro todo el json con todos los datos filtrados y agrego los nuevos elementos pero con las caracteristicas filtradas
+          const fechaItem = item.dt; //le paso como variable las fechas (el dt)
+          return fechaItem >= fechaInicioFormateada && fechaItem <= fechaFinFormateada; //Comparo si fecha item se encuentra dentro de las fechas seleccionadas
+        });
+
+        this.dataInvent = this.dataInvent.filter(item => { //Aqui hago lo mismo que antes pero con el segundo json
+          const fechaItem = item.dt;
+          return fechaItem >= fechaInicioFormateada && fechaItem <= fechaFinFormateada;
+        });
+        
+        Highcharts.chart(this.container, this.chartOptions); //vuelvo a pintar la grafica
+
+
+      }
       
-      const combinedData = [...this.data, ...this.dataInvent] //Combino los dos arreglos
 
-      this.datosFiltrados = combinedData.filter((item) =>//Con esto, filtro los datos combinados basados en el rango de las fechas escritas
-        isWithinInterval(new Date(item.fecha), {  //Aqui uso la propiedad de la documentacion y el primer valor le pongo la constante en la que defino la primera fecha y el segundo valor lo mismo pero con la segunda
-          start: parsedFechaInicial,
-          end: parsedFechaFinal,
-        })
-      );
     },
 
-      // 2023-01-01 2023-01-31  Fecha para probar
-
   },
-
-  watch: {
-    rangoFechas() {
-      this.actualizarGrafica();  //Utilizo el watch para que la grafica se actualice cuando cambie de fecha
-    },
-  },
-
+ 
 
 };
 </script>
