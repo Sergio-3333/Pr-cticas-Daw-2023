@@ -19,6 +19,7 @@ export default {
       container: `grafica-${this._uid}`,
       widthChart: "800",
       heightChart: "auto",
+      rangoFechas: [], //Creo el objeto de las fechas del v-model
       data: [
         {dataClassId: 9, dt: "2022-01-01", hr: 0, vehiclesIn: 55, vehiclesOcc: 16,},
         { dt: "2022-01-01", hr: 1, vehiclesIn: 26, vehiclesOcc: 7 },
