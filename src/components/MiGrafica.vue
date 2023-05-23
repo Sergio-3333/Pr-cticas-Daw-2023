@@ -187,6 +187,7 @@ export default {
     this.actualizarGrafica(); // Llama a la función para mostrar los datos filtrados desde el principio
   },
   methods: {
+
     actualizarGrafica() {
     
         if (this.rangoFechas && this.rangoFechas.length === 2) {//Compruebo que haya numeros y que sean dos
@@ -214,8 +215,13 @@ export default {
         
       }
     }
+  },
 
+watch: {
+    rangoFechas() {
+        this.actualizarGrafica();
+    }
+  }
 
- }
  } ;
 </script>
