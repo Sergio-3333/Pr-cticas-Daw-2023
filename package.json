@@ -16,7 +16,8 @@
         "highcharts-vue": "^1.4.0",
         "resize-observer-polyfill": "^1.5.1",
         "tabulator-tables": "^5.3.1",
-        "vue": "^2.7.8"
+        "vue": "^2.7.8",
+        "vue2-datepicker": "^3.11.1"
     },
     "devDependencies": {
         "@babel/core": "^7.12.16",
