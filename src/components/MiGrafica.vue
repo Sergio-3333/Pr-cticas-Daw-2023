@@ -19,6 +19,8 @@ export default {
       container: `grafica-${this._uid}`,
       widthChart: "800",
       heightChart: "auto",
+      data2: [], //creo dos objetos vacios de data y datainvent
+      dataInvent2: [],
       data: [
         {dataClassId: 9, dt: "2022-01-01", hr: 0, vehiclesIn: 55, vehiclesOcc: 16,},
         { dt: "2022-01-01", hr: 1, vehiclesIn: 26, vehiclesOcc: 7 },
@@ -161,6 +163,10 @@ export default {
   },
   
   mounted() {
+
+    this.data2 = this.data; //guardo los json en los objetos creados para que no se borren los datos de los json. Lo hago aqui porque es donde se empieza a inicializar todo y es donde no se va a perder nada
+    this.dataInvent2 = this.dataInvent;
+
     const resize_ob = new ResizeObserver((entries) => {
       let rect = entries[0].contentRect; 
 
@@ -190,26 +196,21 @@ export default {
 
     actualizarGrafica() {
     
-        if (this.rangoFechas && this.rangoFechas.length === 2) {//Compruebo que haya numeros y que sean dos
-          const fechaInicio = new Date(Date.parse(this.rangoFechas[0]));//Primer elemento del array rangoFechas
-          const fechaFin = new Date(Date.parse(this.rangoFechas[1]));//Segundo elemento del array rangoFechas
-
-          //console.log(fechaFin); //Thu Jun 22 2023 00:00:00 GMT+0200 (hora de verano de Europa central)
+        if (this.rangoFechas && this.rangoFechas.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
+          const fechaInicio = new Date(Date.parse(this.rangoFechas[0])); //primera fecha parseada para que reconozca el formato
+          const fechaFin = new Date(Date.parse(this.rangoFechas[1])); //segunda fecha
 
 
-          this.data = this.data.filter(item => {
-            const fechaItem = new Date(item.dt);
-            //console.log(fechaItem) //Tue Apr 25 2023 02:00:00 GMT+0200 (hora de verano de Europa central)
-            return fechaItem >= fechaInicio && fechaItem <= fechaFin;
+          this.data = this.data2.filter(item => { //Filtro los datos del objeto creado. Con esto cuando se actualice la grafica, evito coger otra vez el mismo data que ya ha eliminado los valores que no estaban en las fechas elegidas. 
+            const fechaItem = new Date(item.dt);//le paso como variable las fechas (el dt)      //Al reiniciarse el objeto con todos los datos de data, lo unico que hará será volver a pintar los valores que hay entre fechas
+            return fechaItem >= fechaInicio && fechaItem <= fechaFin; //Comparo si fecha item se encuentra dentro de las fechas seleccionadas
           });
 
-          this.dataInvent = this.dataInvent.filter(item => {
+          this.dataInvent = this.dataInvent2.filter(item => { //Lo mismo que antes
             const fechaItem = new Date(item.dt);
             return fechaItem >= fechaInicio && fechaItem <= fechaFin;
           });
 
-          //console.log('Array de datos ya filtrados:', this.data);
-          //console.log('Array de datos inventados ya filtrados:', this.dataInvent);
           
         Highcharts.chart(this.container, this.chartOptions);
         
@@ -217,11 +218,12 @@ export default {
     }
   },
 
-watch: {
-    rangoFechas() {
-        this.actualizarGrafica();
-    }
-  }
+  watch: { //uso el watch para que actualice todo el rato
+  rangoFechas() {
+      this.actualizarGrafica();
+  },
+},
+
 
  } ;
 </script>
