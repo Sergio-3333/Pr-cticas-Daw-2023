@@ -17,8 +17,6 @@ export default {
             column:12,
             cellHeight: 50,
             float: true,
-            removable: '#borrar',
-            removeTimeout: 100,
             enableMove: true,
             enableResize:true,
           
