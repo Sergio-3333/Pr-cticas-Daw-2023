@@ -168,7 +168,9 @@ export default {
     this.dataInvent2 = this.dataInvent;
 
     const resize_ob = new ResizeObserver((entries) => {
-      let rect = entries[0].contentRect; 
+      entries.forEach(entry =>{
+
+      const rect = entry.contentRect; 
 
       let currentwidth = rect.width;
 
@@ -178,6 +180,7 @@ export default {
         this.widthChart = currentwidth;
 
         this.heightChart = currentHeight - 50;
+        
       } else {
         this.widthChart = parseFloat(currentwidth) - 80;
 
@@ -185,7 +188,8 @@ export default {
       }      
 
       Highcharts.chart(this.container, this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
-
+      })
+      
     });
 
     resize_ob.observe(document.querySelector(".prueba"));
