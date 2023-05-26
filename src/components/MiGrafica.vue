@@ -72,8 +72,6 @@ export default {
       return {
         chart: {
           zoomType: "x",
-          //width: this.widthChart,  Le quito esto para que la tabla se muestre con todo el ancho del container. Y para hacer que ocupe tambien todo el alto, edito el container en el css poniendo la altura al 100%
-          //height: this.heightChart,
           backgroundColor: "#000000",
         },
         title: {
@@ -168,31 +166,44 @@ export default {
     this.dataInvent2 = this.dataInvent;
 
     const resize_ob = new ResizeObserver((entries) => {
-      entries.forEach(entry =>{
+      entries.forEach(entry =>{         //Recorro cada elemento del contenedor para hacer cambios en cada uno de ellos
 
-      const rect = entry.contentRect; 
+      const rect = entry.contentRect; //Obtengo el contenedor del elemento seleccionado
 
+      //Obtengo el ancho y alto predefinido
       let currentwidth = rect.width;
 
       let currentHeight = rect.height;
 
-      if (currentwidth < 500) {
-        this.widthChart = currentwidth;
+      //Defino nuevo ancho y largo
+      let widthChart, heightChart;
 
-        this.heightChart = currentHeight - 50;
+      if (currentwidth < 500) {
+        widthChart = currentwidth;    
+
+        heightChart = currentHeight - 40;
         
       } else {
-        this.widthChart = parseFloat(currentwidth) - 80;
+        widthChart = parseFloat(currentwidth) - 30;
 
-        this.heightChart = parseFloat(currentHeight) - 30;
+        heightChart = parseFloat(currentHeight);
       }      
 
-      Highcharts.chart(this.container, this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
+      Highcharts.chart(entry.target,{   //Con entry.target hago referencia al elemento del contenedor que quiero cambiar
+        ...this.chartOptions, //Copio las opciones de la grafica
+        chart: {
+          ...this.chartOptions.chart, //Copio las propiedades del objeto chart y le añado la anchura y altura definidas anteriormente
+          width: widthChart,
+          height: heightChart
+        }
+      });
       })
       
     });
-
-    resize_ob.observe(document.querySelector(".prueba"));
+    document.querySelectorAll(".prueba").forEach(container => { //Recorro todo el contenedor de prueba y realizo las funciones a cada elemento del container
+      resize_ob.observe(container); 
+    });
+    
 
     this.actualizarGrafica(); // Llama a la función para mostrar los datos filtrados desde el principio
   },
