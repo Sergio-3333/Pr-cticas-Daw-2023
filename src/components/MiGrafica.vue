@@ -7,6 +7,8 @@
 <script>
 import ResizeObserver from "resize-observer-polyfill";
 import Highcharts from "highcharts";
+import { differenceInDays } from 'date-fns';
+
 
 export default {
   props: {
@@ -19,7 +21,8 @@ export default {
       container: `grafica-${this._uid}`,
       widthChart: "800",
       heightChart: "auto",
-      rangoFechas: [], //Creo el objeto de las fechas del v-model
+      data2: [], //creo dos objetos vacios de data y datainvent
+      dataInvent2: [],
       data: [
         {dataClassId: 9, dt: "2022-01-01", hr: 0, vehiclesIn: 55, vehiclesOcc: 16,},
         { dt: "2022-01-01", hr: 1, vehiclesIn: 26, vehiclesOcc: 7 },
@@ -71,8 +74,6 @@ export default {
       return {
         chart: {
           zoomType: "x",
-          //width: this.widthChart,  Le quito esto para que la tabla se muestre con todo el ancho del container. Y para hacer que ocupe tambien todo el alto, edito el container en el css poniendo la altura al 100%
-          //height: this.heightChart,
           backgroundColor: "#000000",
         },
         title: {
@@ -162,61 +163,91 @@ export default {
   },
   
   mounted() {
-    const resize_ob = new ResizeObserver((entries) => {
-      let rect = entries[0].contentRect; 
 
+    this.data2 = this.data; //guardo los json en los objetos creados para que no se borren los datos de los json. Lo hago aqui porque es donde se empieza a inicializar todo y es donde no se va a perder nada
+    this.dataInvent2 = this.dataInvent;
+
+    const resize_ob = new ResizeObserver((entries) => {
+      entries.forEach(entry =>{         //Recorro cada elemento del contenedor para hacer cambios en cada uno de ellos
+
+      const rect = entry.contentRect; //Obtengo el contenedor del elemento seleccionado
+
+      //Obtengo el ancho y alto predefinido
       let currentwidth = rect.width;
 
       let currentHeight = rect.height;
 
+      //Defino nuevo ancho y largo
+      let widthChart, heightChart;
+
       if (currentwidth < 500) {
-        this.widthChart = currentwidth;
+        widthChart = currentwidth;    
 
-        this.heightChart = currentHeight - 50;
+        heightChart = currentHeight - 40;
+        
       } else {
-        this.widthChart = parseFloat(currentwidth) - 80;
+        widthChart = parseFloat(currentwidth) - 30;
 
-        this.heightChart = parseFloat(currentHeight) - 30;
+        heightChart = parseFloat(currentHeight);
       }      
 
-      Highcharts.chart(this.container, this.chartOptions); //El unico cambio que he hecho es renderizar la tabla despues del codigo para que así se renderice con las opciones de resizeobserver
-
+      Highcharts.chart(entry.target,{   //Con entry.target hago referencia al elemento del contenedor que quiero cambiar
+        ...this.chartOptions, //Copio las opciones de la grafica
+        chart: {
+          ...this.chartOptions.chart, //Copio las propiedades del objeto chart y le añado la anchura y altura definidas anteriormente
+          width: widthChart,
+          height: heightChart
+        }
+      });
+      })
+      
     });
-
-    resize_ob.observe(document.querySelector(".prueba"));
+    document.querySelectorAll(".prueba").forEach(container => { //Recorro todo el contenedor de prueba y realizo las funciones a cada elemento del container
+      resize_ob.observe(container); 
+    });
+    
 
     this.actualizarGrafica(); // Llama a la función para mostrar los datos filtrados desde el principio
   },
   methods: {
+
     actualizarGrafica() {
     
-        if (this.rangoFechas && this.rangoFechas.length === 2) {//Compruebo que haya numeros y que sean dos
-          const fechaInicio = new Date(Date.parse(this.rangoFechas[0]));//Primer elemento del array rangoFechas
-          const fechaFin = new Date(Date.parse(this.rangoFechas[1]));//Segundo elemento del array rangoFechas
+    if (this.rangoFechas && this.rangoFechas.length === 2 && this.rangoFechas2 && this.rangoFechas2.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
+      const fechaInicio = new Date(Date.parse(this.rangoFechas[0])); //primera fecha parseada para que reconozca el formato
+      const fechaFin = new Date(Date.parse(this.rangoFechas[1])); //segunda fecha
 
-          //console.log(fechaFin); //Thu Jun 22 2023 00:00:00 GMT+0200 (hora de verano de Europa central)
+      const fechaInicio2 = new Date(Date.parse(this.rangoFechas2[0])); //primera fecha del segundo input parseada para que reconozca el formato
+      const fechaFin2 = new Date(Date.parse(this.rangoFechas2[1])); //segunda fecha del segundo input 
 
+      const difDias1 = differenceInDays(fechaFin, fechaInicio);//Diferencia del primer rango
+      const difDias2 = differenceInDays(fechaFin2, fechaInicio2);//Diferencia del segundo rango
 
-          this.data = this.data.filter(item => {
-            const fechaItem = new Date(item.dt);
-            //console.log(fechaItem) //Tue Apr 25 2023 02:00:00 GMT+0200 (hora de verano de Europa central)
-            return fechaItem >= fechaInicio && fechaItem <= fechaFin;
-          });
+      if(difDias1 == difDias2) {//Para asegurar que son la misma diferencia de dias en ambos rangos
 
-          this.dataInvent = this.dataInvent.filter(item => {
-            const fechaItem = new Date(item.dt);
-            return fechaItem >= fechaInicio && fechaItem <= fechaFin;
-          });
+        this.data = this.data2.filter(item => { //Filtro los datos del objeto creado. Con esto cuando se actualice la grafica, evito coger otra vez el mismo data que ya ha eliminado los valores que no estaban en las fechas elegidas. 
+          const fechaItem = new Date(item.dt);//le paso como variable las fechas (el dt)      //Al reiniciarse el objeto con todos los datos de data, lo unico que hará será volver a pintar los valores que hay entre fechas
+          return fechaItem >= fechaInicio && fechaItem <= fechaFin; //Comparo si fecha item se encuentra dentro de las fechas seleccionadas
+        });
 
-          //console.log('Array de datos ya filtrados:', this.data);
-          //console.log('Array de datos inventados ya filtrados:', this.dataInvent);
-          
-        Highcharts.chart(this.container, this.chartOptions);
+        this.dataInvent = this.dataInvent2.filter(item => { //Lo mismo que antes
+          const fechaItem = new Date(item.dt);
+          return fechaItem >= fechaInicio && fechaItem <= fechaFin;
+        });
         
+        Highcharts.chart(this.container, this.chartOptions);
       }
-    }
+    
+  }
+}
+  },
+
+  watch: { //uso el watch para que actualice todo el rato
+  rangoFechas() {
+      this.actualizarGrafica();
+  },
+},
 
 
- }
  } ;
 </script>

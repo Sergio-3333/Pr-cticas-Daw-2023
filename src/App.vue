@@ -6,14 +6,14 @@
   <div id="app">
 
     <date-picker class="datepicker" v-model="rangoFechas"  placeholder="Selecciona el rango de fechas" range></date-picker> <!--Con esto selecciono un rango de fechas-->
+    <date-picker class="datepicker" v-model="rangoFechas2"  placeholder="Selecciona el rango de fechas" range></date-picker> <!--Con esto selecciono un rango de fechas-->
     
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
-    <div id="borrar"> Borrar Widget</div>    
-
     <GridStackLayout>
-      <GridStackItem v-for="(widget, index) in widgets" :key="index" :gs-x="widget.x" :gs-y="widget.y" :gs-h="widget.h" :gs-w="widget.w" >
-        <component :is="widget.typeWidget" :rangoFechas="rangoFechas"></component>
+      <GridStackItem v-for=" widget in widgets" :key="widget.id" :gs-h="widget.h" :gs-w="widget.w" >
+        <button id="borrar" @click="borrarWidget(widget.id)">X</button>
+        <component :is="widget.typeWidget" :rangoFechas="rangoFechas" :rangoFechas2="rangoFechas2" ></component>
       </GridStackItem>
     </GridStackLayout>
   </div>
@@ -49,23 +49,31 @@ export default {
   }, 
     methods: {
       
+      generarIdUnico1() { 
+        return Math.random().toString(30).substring(2);  //genero un id diferente a cada widget para que asi reconozca a cada uno  
+    },
+      
       addWidgetGrafica(){
-        const optionsGrafica = {x: 0, y: 0, w:4, typeWidget:MiGrafica};
+        const optionsGrafica = {id:this.generarIdUnico1(), h: 10, w:4, typeWidget:MiGrafica};
 
         //console.log(this.rangoFechas); // las fechas me las reconoce y las guarda correctamente
 
         this.widgets.push(optionsGrafica);
       },
       addWidgetTabla(){
-        const optionsTabla = {x: 4, y: 4, h: 10, w:4, typeWidget:MiTabla};
+        const optionsTabla = {id:this.generarIdUnico1(), h: 10, w:4, typeWidget:MiTabla};
 
         this.widgets.push(optionsTabla);
+      },
+
+      borrarWidget(id){
+        const index = this.widgets.findIndex(widget => widget.id === id) //Creo un index y guardo el id creado dentr del widget)
+
+        this.widgets.splice(index, 1) //Elimino el widget elegido
       }
       
 
     }
-
-
 }
 
 </script>
