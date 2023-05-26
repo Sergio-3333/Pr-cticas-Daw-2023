@@ -9,10 +9,12 @@ import ResizeObserver from "resize-observer-polyfill";
 import Highcharts from "highcharts";
 import { differenceInDays } from 'date-fns';
 
-
 export default {
   props: {
     rangoFechas: {
+      type: Array
+    },
+    rangoFechas2: {
       type: Array
     }
   },
@@ -222,6 +224,7 @@ export default {
 
       const difDias1 = differenceInDays(fechaFin, fechaInicio);//Diferencia del primer rango
       const difDias2 = differenceInDays(fechaFin2, fechaInicio2);//Diferencia del segundo rango
+
 
       if(difDias1 == difDias2) {//Para asegurar que son la misma diferencia de dias en ambos rangos
 
