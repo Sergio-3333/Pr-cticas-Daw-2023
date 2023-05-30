@@ -229,7 +229,7 @@ En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace
 }
 
 .mx-btn-icon-left::before {
-    content: "Anterior año";
+    content: "Anterior mes";
     color: #000;
 }
 
