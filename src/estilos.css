@@ -154,38 +154,100 @@ En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace
     align-items: center;
 }
 
-.datepicker {
-    display: inline-block;
-    position: relative;
+.mx-datepicker-main {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    margin-top: -11%;
 }
 
-.datepicker .mx-datepicker {
-    background-color: #ffffff;
+.mx-datepicker-content {
+    width: 550px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    color: #000;
+    text-align: center;
+    justify-content: center;
 }
 
-.datepicker .mx-datepicker .mx-datepicker-header {
-    background-color: #f5f5f5;
-    padding: 10px;
-}
-
-.datepicker .mx-datepicker .mx-datepicker-body {
+.mx-datepicker-body {
     padding: 10px;
 }
 
-.datepicker .mx-datepicker .mx-datepicker-footer {
-    background-color: #f5f5f5;
-    padding: 10px;
+.mx-range-wrapper {
+    margin-bottom: 10px;
 }
 
-.datepicker .mx-datepicker .mx-datepicker-day:hover {
-    background-color: #e0e0e0;
+.mx-calendar-header {
+    background-color: #f2f2f2;
+    padding: 5px;
+    font-weight: bold;
+    width: 500px;
 }
 
-.datepicker .mx-datepicker .mx-datepicker-day.active {
-    background-color: #c5cae9;
-    color: #ffffff;
+.mx-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.mx-btn-text {
+    margin: 0;
+}
+
+.mx-calendar-header-label {
+    font-weight: bold;
+}
+
+.mx-btn-current-year {
+    color: #000;
+}
+
+.mx-btn-current-month {
+    color: #000;
+}
+
+.mx-btn-icon-double-right::before {
+    content: "Siguiente año";
+    color: #000;
+}
+
+.mx-btn-icon-right ::before {
+    content: "Siguiente mes";
+    color: #000;
+}
+
+.mx-btn-icon-double-left ::before {
+    content: "Anterior Año";
+    color: #000;
+}
+
+.mx-btn-icon-left::before {
+    content: "Anterior año";
+    color: #000;
+}
+
+.mx-table.mx-table-date {
+    margin: 0 auto;
+}
+
+.mx-table.mx-table-date tbody,
+.mx-table.mx-table-date thead {
+    text-align: center;
+}
+
+.cell[data-row-col]:hover {
+    cursor: pointer;
+    background-color: rgb(6, 239, 6);
+}
+
+.cell[data-row-col]:focus {
+    cursor: pointer;
+    background-color: rgb(6, 239, 6);
 }
