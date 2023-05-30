@@ -1,6 +1,7 @@
 <style>@import "estilos.css";</style>
 <style>@import "tabulator-tables";</style>
 <style>@import url("https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css");</style>
+<style>@import "vue2-datepicker/index.css";</style>
 
 <template>
   <div id="app">

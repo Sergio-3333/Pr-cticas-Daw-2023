@@ -235,7 +235,7 @@ export default {
 
         this.dataInvent = this.dataInvent2.filter(item => { //Lo mismo que antes
           const fechaItem = new Date(item.dt);
-          return fechaItem >= fechaInicio && fechaItem <= fechaFin;
+          return fechaItem >= fechaInicio2 && fechaItem <= fechaFin;
         });
         
         Highcharts.chart(this.container, this.chartOptions);
