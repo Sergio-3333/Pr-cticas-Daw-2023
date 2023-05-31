@@ -1,6 +1,7 @@
 <style>@import "estilos.css";</style>
 <style>@import "tabulator-tables";</style>
 <style>@import url("https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css");</style>
+<style>@import "vue2-datepicker/index.css";</style>
 
 <template>
   <div id="app">
@@ -10,9 +11,9 @@
     
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
+    <button @click="addWidgetMap()">Añadir Mapa</button>
     <GridStackLayout>
       <GridStackItem v-for=" widget in widgets" :key="widget.id" :gs-h="widget.h" :gs-w="widget.w" >
-        <button id="borrar" @click="borrarWidget(widget.id)">X</button>
         <component :is="widget.typeWidget" :rangoFechas="rangoFechas" :rangoFechas2="rangoFechas2" ></component>
       </GridStackItem>
     </GridStackLayout>
@@ -22,6 +23,7 @@
 
 import MiGrafica from './components/MiGrafica.vue';
 import MiTabla from './components/MiTabla.vue';
+import MiMapa from './components/MiMapa.vue';
 import GridStackItem from './components/GridStackItem.vue';
 import GridStackLayout from './components/GridStackLayout.vue';
 //import GridStack from "/node_modules/gridstack/dist/gridstack-h5.js";
@@ -36,6 +38,7 @@ export default {
   components:{
     MiGrafica,
     MiTabla,
+    MiMapa,
     GridStackItem,
     GridStackLayout,
     DatePicker
@@ -48,30 +51,25 @@ export default {
     }
   }, 
     methods: {
-      
-      generarIdUnico1() { 
-        return Math.random().toString(30).substring(2);  //genero un id diferente a cada widget para que asi reconozca a cada uno  
-    },
-      
+       
       addWidgetGrafica(){
-        const optionsGrafica = {id:this.generarIdUnico1(), h: 10, w:4, typeWidget:MiGrafica};
+        const optionsGrafica = {h: 10, w:4, typeWidget:MiGrafica};
 
         //console.log(this.rangoFechas); // las fechas me las reconoce y las guarda correctamente
 
         this.widgets.push(optionsGrafica);
       },
       addWidgetTabla(){
-        const optionsTabla = {id:this.generarIdUnico1(), h: 10, w:4, typeWidget:MiTabla};
+        const optionsTabla = {h: 10, w:4, typeWidget:MiTabla};
 
         this.widgets.push(optionsTabla);
       },
-
-      borrarWidget(id){
-        const index = this.widgets.findIndex(widget => widget.id === id) //Creo un index y guardo el id creado dentr del widget)
-
-        this.widgets.splice(index, 1) //Elimino el widget elegido
-      }
       
+      addWidgetMap(){
+        const optionsTabla = {h: 10, w:4, typeWidget:MiMapa};
+
+        this.widgets.push(optionsTabla);
+      }
 
     }
 }

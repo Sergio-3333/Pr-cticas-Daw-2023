@@ -153,39 +153,3 @@ En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace
     justify-content: center;
     align-items: center;
 }
-
-.datepicker {
-    display: inline-block;
-    position: relative;
-}
-
-.datepicker .mx-datepicker {
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.datepicker .mx-datepicker .mx-datepicker-header {
-    background-color: #f5f5f5;
-    padding: 10px;
-}
-
-.datepicker .mx-datepicker .mx-datepicker-body {
-    padding: 10px;
-}
-
-.datepicker .mx-datepicker .mx-datepicker-footer {
-    background-color: #f5f5f5;
-    padding: 10px;
-}
-
-.datepicker .mx-datepicker .mx-datepicker-day:hover {
-    background-color: #e0e0e0;
-}
-
-.datepicker .mx-datepicker .mx-datepicker-day.active {
-    background-color: #c5cae9;
-    color: #ffffff;
-}

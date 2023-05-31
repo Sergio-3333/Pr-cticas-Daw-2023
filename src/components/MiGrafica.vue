@@ -1,6 +1,7 @@
 <template>
   <div class="prueba" style="width: 100%">
     <div :id="container" class="container"></div>
+    <p>{{ mensaje }}</p>
   </div>
 </template>
 
@@ -235,7 +236,7 @@ export default {
 
         this.dataInvent = this.dataInvent2.filter(item => { //Lo mismo que antes
           const fechaItem = new Date(item.dt);
-          return fechaItem >= fechaInicio && fechaItem <= fechaFin;
+          return fechaItem >= fechaInicio2 && fechaItem <= fechaFin2;//Comparo si fecha item se encuentra dentro de las fechas seleccionadas en el seegundo rango
         });
         
         Highcharts.chart(this.container, this.chartOptions);

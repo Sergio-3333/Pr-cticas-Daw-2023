@@ -11,6 +11,7 @@
         "core-js": "^3.8.3",
         "date-fns": "^2.30.0",
         "export-from-json": "^1.7.2",
+        "gmap-vue": "^3.5.4",
         "gridstack": "^5.1.1",
         "highcharts": "^10.2.0",
         "highcharts-vue": "^1.4.0",
