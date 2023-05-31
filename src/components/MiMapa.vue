@@ -1,11 +1,9 @@
 <template>
-  <div>
     <GmapMap
     :center='coordenadas'
     :zoom='12'
-      style='width:100%;  height: 400px;'
+      style='width:95%;  height: 100%;'
     />
-  </div>
 </template>
 
 <script>

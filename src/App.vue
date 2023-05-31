@@ -11,7 +11,7 @@
     
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
-    <button @click="addWidgetMap()">Añadir Mapa</button>
+    <button @click="addWidgetMapa()">Añadir Mapa</button>
     <GridStackLayout>
       <GridStackItem v-for=" widget in widgets" :key="widget.id" :gs-h="widget.h" :gs-w="widget.w" >
         <component :is="widget.typeWidget" :rangoFechas="rangoFechas" :rangoFechas2="rangoFechas2" ></component>
@@ -65,7 +65,7 @@ export default {
         this.widgets.push(optionsTabla);
       },
       
-      addWidgetMap(){
+      addWidgetMapa(){
         const optionsTabla = {h: 10, w:4, typeWidget:MiMapa};
 
         this.widgets.push(optionsTabla);

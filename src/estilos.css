@@ -153,3 +153,7 @@ En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace
     justify-content: center;
     align-items: center;
 }
+
+.vue-map {
+    width: 98%;
+}
