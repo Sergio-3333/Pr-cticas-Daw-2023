@@ -1,6 +1,8 @@
 <template>
   <div class="grid-stack-item" gs-max-w="10" gs-h="10" gs-w="4" >
     <div class="grid-stack-item-content">
+      <button id="borrar" @click="borrarWidget">X</button>
+
     <slot></slot>
     </div>
   </div>
@@ -30,9 +32,13 @@ export default {
   methods:{
 
     iniciarGridStack(){
-
+      var widget = this.$el;
       this.grid = GridStack.init(this.options);
-      this.grid.addWidget(this.$el); //Uso el this.$el para que gridStack agregue todos los widgets creados al div de gridstack-item y con todas sus opciones de grid
+      this.grid.addWidget(widget); //Uso el this.$el para que gridStack agregue todos los widgets creados al div de gridstack-item y con todas sus opciones de grid
+    },
+    borrarWidget(){
+      var widget = this.$el;
+      this.grid.removeWidget(widget);
     }
     
   },
