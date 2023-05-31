@@ -236,11 +236,7 @@ export default {
 
         this.dataInvent = this.dataInvent2.filter(item => { //Lo mismo que antes
           const fechaItem = new Date(item.dt);
-<<<<<<< HEAD
           return fechaItem >= fechaInicio2 && fechaItem <= fechaFin2;//Comparo si fecha item se encuentra dentro de las fechas seleccionadas en el seegundo rango
-=======
-          return fechaItem >= fechaInicio2 && fechaItem <= fechaFin;
->>>>>>> 26ed97004f1e35c6aa66785ea3889b179cd1373f
         });
         
         Highcharts.chart(this.container, this.chartOptions);
