@@ -8,21 +8,21 @@
 
     <date-picker class="datepicker" v-model="rangoFechas"  placeholder="Selecciona el rango de fechas" range>     
       <template v-slot:header> <!--Utilizo un slot llamado header para personalizar/agregar elementos al header del calendario y despues creo los botones-->
-          <button class="calendarioBoton" @click="irHoy">Hoy</button>
-          <button class="calendarioBoton" @click="irAyer">Ayer</button>
-          <button class="calendarioBoton" @click="irSemanaPasada">Semana Pasada</button>
-          <button class="calendarioBoton" @click="irMesPasado">Mes Pasado</button>
-          <button class="calendarioBoton" @click="irAnoPasado">Año Pasado</button>
+          <button class="calendarioBoton" @click="irHoy(1)">Hoy</button>      <!--Añado un numero a cada metodo que será su indice-->
+          <button class="calendarioBoton" @click="irAyer(1)">Ayer</button>
+          <button class="calendarioBoton" @click="irSemanaPasada(1)">Semana Pasada</button>
+          <button class="calendarioBoton" @click="irMesPasado(1)">Mes Pasado</button>
+          <button class="calendarioBoton" @click="irAnoPasado(1)">Año Pasado</button>
       </template>
     </date-picker> 
 
     <date-picker class="datepicker" v-model="rangoFechas2"  placeholder="Selecciona el rango de fechas" range>     
       <template v-slot:header> 
-          <button class="calendarioBoton" @click="irHoy">Hoy</button>
-          <button class="calendarioBoton" @click="irAyer">Ayer</button>
-          <button class="calendarioBoton" @click="irSemanaPasada">Semana Pasada</button>
-          <button class="calendarioBoton" @click="irMesPasado">Mes Pasado</button>
-          <button class="calendarioBoton" @click="irAñoPasado">Año Pasado</button>
+          <button class="calendarioBoton" @click="irHoy(2)">Hoy</button>
+          <button class="calendarioBoton" @click="irAyer(2)">Ayer</button>
+          <button class="calendarioBoton" @click="irSemanaPasada(2)">Semana Pasada</button>
+          <button class="calendarioBoton" @click="irMesPasado(2)">Mes Pasado</button>
+          <button class="calendarioBoton" @click="irAñoPasado(2)">Año Pasado</button>
       </template>
     </date-picker> 
 
@@ -91,49 +91,61 @@ export default {
         this.widgets.push(optionsTabla);
       },
       
-      irHoy(){
-        this.rangoFechas = [new Date(), new Date()];
-        this.rangoFechas2 = [new Date(), new Date()];
+      irHoy(index){   //Creo un parametro llamado index
+        const hoy = new Date();
+        const fecha = [new Date(hoy), new Date(hoy)];
+        this.actualizarRangoFechas(index, fecha); // Lo que hago es guardar la fecha elegida en un componente fecha y con el metodo para actualizarRangoFechas, le paso el id del input. Esto lo hago con todos los metodos
 
       },
       
-      irAyer(){
+      irAyer(index){
         const hoy = new Date();
         const ayer = new Date(hoy);
         ayer.setDate(hoy.getDate() - 1);
-        this.rangoFechas = [new Date(ayer), new Date(ayer)];
-        this.rangoFechas2 = [new Date(ayer),new Date(ayer)];
+        const fecha = [new Date(ayer), new Date(ayer)];
+        this.actualizarRangoFechas(index, fecha);
 
       },
 
-      irSemanaPasada(){
+      irSemanaPasada(index){
         const hoy = new Date();
         const fechaInicial = new Date(hoy);
         const fechaFinal = new Date(hoy);
         fechaInicial.setDate(hoy.getDate() - 7);
         fechaFinal.setDate(hoy.getDate() - 1);
-        this.rangoFechas = [new Date(fechaInicial), new Date(fechaFinal)];
-        this.rangoFechas2 = [new Date(fechaInicial), new Date(fechaFinal)];
-
+        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
+        this.actualizarRangoFechas(index, fecha);
 
       },
-      irMesPasado(){
+
+      irMesPasado(index){
         const hoy = new Date();
         const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 1);
         const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
-        this.rangoFechas = [fechaInicial, fechaFinal];
-        this.rangoFechas2 = [new Date(fechaInicial), new Date(fechaFinal)];
-
+        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
+        this.actualizarRangoFechas(index, fecha);
 
       },
 
-      irAnoPasado(){
+      irAnoPasado(index){
         const hoy = new Date();
         const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 12);
         const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
-        this.rangoFechas = [fechaInicial, fechaFinal];
-        this.rangoFechas2 = [new Date(fechaInicial), new Date(fechaFinal)];
+        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
+        this.actualizarRangoFechas(index, fecha);
 
+      },
+
+      actualizarRangoFechas(index, fecha){  //Creo el metodo para que cada fecha se guarde en cada input
+
+        if ( index === 1){ //Condicional que dice que si el index elegido es el 1, el array/fecha se guarde en el rangoFechas para que lo pueda imprimir correctamente. Hago lo mismo con el indice 2
+
+          this.rangoFechas = [...fecha];
+
+        }else if (index === 2){
+
+          this.rangoFechas2 = [...fecha];
+        }
       }
 
     }
