@@ -22,7 +22,7 @@
           <button class="calendarioBoton" @click="irAyer(2)">Ayer</button>
           <button class="calendarioBoton" @click="irSemanaPasada(2)">Semana Pasada</button>
           <button class="calendarioBoton" @click="irMesPasado(2)">Mes Pasado</button>
-          <button class="calendarioBoton" @click="irAñoPasado(2)">Año Pasado</button>
+          <button class="calendarioBoton" @click="irAnoPasado(2)">Año Pasado</button>
       </template>
     </date-picker> 
 
