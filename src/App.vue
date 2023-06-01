@@ -6,8 +6,27 @@
 <template>
   <div id="app">
 
-    <date-picker class="datepicker" v-model="rangoFechas"  placeholder="Selecciona el rango de fechas" range></date-picker> <!--Con esto selecciono un rango de fechas-->
-    <date-picker class="datepicker" v-model="rangoFechas2"  placeholder="Selecciona el rango de fechas" range></date-picker> <!--Con esto selecciono un rango de fechas-->
+    <date-picker class="datepicker" v-model="rangoFechas"  placeholder="Selecciona el rango de fechas" range>     
+      <template v-slot:header> <!--Utilizo un slot llamado header para personalizar/agregar elementos al header del calendario y despues creo los botones-->
+          <button class="calendarioBoton" @click="irHoy">Hoy</button>
+          <button class="calendarioBoton" @click="irAyer">Ayer</button>
+          <button class="calendarioBoton" @click="irSemanaPasada">Semana Pasada</button>
+          <button class="calendarioBoton" @click="irMesPasado">Mes Pasado</button>
+          <button class="calendarioBoton" @click="irAnoPasado">Año Pasado</button>
+      </template>
+    </date-picker> 
+
+    <date-picker class="datepicker" v-model="rangoFechas2"  placeholder="Selecciona el rango de fechas" range>     
+      <template v-slot:header> 
+          <button class="calendarioBoton" @click="irHoy">Hoy</button>
+          <button class="calendarioBoton" @click="irAyer">Ayer</button>
+          <button class="calendarioBoton" @click="irSemanaPasada">Semana Pasada</button>
+          <button class="calendarioBoton" @click="irMesPasado">Mes Pasado</button>
+          <button class="calendarioBoton" @click="irAñoPasado">Año Pasado</button>
+      </template>
+    </date-picker> 
+
+    
     
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
@@ -46,8 +65,9 @@ export default {
 
       data() {
       return {
-        rangoFechas: [], //Defino el v-model vacio
-        widgets: [],
+        rangoFechas: [], 
+        rangoFechas2: [],
+        widgets: []
     }
   }, 
     methods: {
@@ -69,6 +89,51 @@ export default {
         const optionsTabla = {h: 10, w:4, typeWidget:MiMapa};
 
         this.widgets.push(optionsTabla);
+      },
+      
+      irHoy(){
+        this.rangoFechas = [new Date(), new Date()];
+        this.rangoFechas2 = [new Date(), new Date()];
+
+      },
+      
+      irAyer(){
+        const hoy = new Date();
+        const ayer = new Date(hoy);
+        ayer.setDate(hoy.getDate() - 1);
+        this.rangoFechas = [new Date(ayer), new Date(ayer)];
+        this.rangoFechas2 = [new Date(ayer),new Date(ayer)];
+
+      },
+
+      irSemanaPasada(){
+        const hoy = new Date();
+        const fechaInicial = new Date(hoy);
+        const fechaFinal = new Date(hoy);
+        fechaInicial.setDate(hoy.getDate() - 7);
+        fechaFinal.setDate(hoy.getDate() - 1);
+        this.rangoFechas = [new Date(fechaInicial), new Date(fechaFinal)];
+        this.rangoFechas2 = [new Date(fechaInicial), new Date(fechaFinal)];
+
+
+      },
+      irMesPasado(){
+        const hoy = new Date();
+        const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 1);
+        const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+        this.rangoFechas = [fechaInicial, fechaFinal];
+        this.rangoFechas2 = [new Date(fechaInicial), new Date(fechaFinal)];
+
+
+      },
+
+      irAnoPasado(){
+        const hoy = new Date();
+        const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 12);
+        const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+        this.rangoFechas = [fechaInicial, fechaFinal];
+        this.rangoFechas2 = [new Date(fechaInicial), new Date(fechaFinal)];
+
       }
 
     }
