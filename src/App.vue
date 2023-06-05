@@ -33,7 +33,7 @@
     <button @click="addWidgetMapa()">Añadir Mapa</button>
     <GridStackLayout>
       <GridStackItem v-for=" widget in widgets" :key="widget.id" :gs-h="widget.h" :gs-w="widget.w" >
-        <component :is="widget.typeWidget" :widgetConfiguration="widgetConfig" ></component>
+        <component :is="widget.typeWidget" :widgetConfiguration="widgetConfiguration" ></component>
       </GridStackItem>
     </GridStackLayout>
   </div>
@@ -153,12 +153,12 @@ export default {
         if ( index === 1){ //Condicional que dice que si el index elegido es el 1, el array/fecha se guarde en el rangoFechas para que lo pueda imprimir correctamente. Hago lo mismo con el indice 2
 
           this.widgetConfiguration.rangoFechas = [...fecha];
-          console.log(this.widgetConfiguration.rangoFechas);
+          console.log('Fecha 1', this.widgetConfiguration.rangoFechas);
 
         }else if (index === 2){
 
           this.widgetConfiguration.rangoFechas2 = [...fecha];
-          console.log(this.widgetConfiguration.rangoFechas2);
+          console.log('Fecha 2', this.widgetConfiguration.rangoFechas2);
 
         }
       }

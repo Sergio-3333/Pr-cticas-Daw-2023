@@ -1,7 +1,6 @@
 <template>
   <div class="prueba" style="width: 100%">
     <div :id="container" class="container"></div>
-    <p>{{ mensaje }}</p>
   </div>
 </template>
 
@@ -71,6 +70,7 @@ export default {
     };
   },
   computed: {
+    
     chartOptions() {
       const fecha = this.data.map((item) => Date.parse(item.dt));
       const vehiclesIn = this.data.map((item) => item.vehiclesIn);
@@ -170,8 +170,6 @@ export default {
   },
   
   mounted() {
-
-    console.log('rangofechas', this.widgetConfiguration.rangoFechas);
     
     this.data2 = this.data; //guardo los json en los objetos creados para que no se borren los datos de los json. Lo hago aqui porque es donde se empieza a inicializar todo y es donde no se va a perder nada
     this.dataInvent2 = this.dataInvent;
@@ -217,22 +215,24 @@ export default {
     
 
     this.actualizarGrafica(); // Llama a la función para mostrar los datos filtrados desde el principio
-    console.log('rangofechas', this.widgetConfiguration.rangoFechas);
 
   },
   methods: {
 
     actualizarGrafica() {
+      
+      console.log("Este es el de MiGrafica",this.widgetConfiguration);
+      
+      const rangoFechas = this.widgetConfiguration.rangoFechas;
+      const rangoFechas2 = this.widgetConfiguration.rangoFechas2;
     
-    console.log('rangofechas', this.widgetConfiguration.rangoFechas);
-    if (this.widgetConfiguration.rangoFechas && this.widgetConfiguration.rangoFechas.length === 2 && this.widgetConfiguration.rangoFechas2rangoFechas2 && this.widgetConfiguration.rangoFechas2.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
-      const fechaInicio = new Date(Date.parse(this.widgetConfiguration.rangoFechas[0])); //primera fecha parseada para que reconozca el formato
-      const fechaFin = new Date(Date.parse(this.widgetConfiguration.rangoFechas[1])); //segunda fecha
-      console.log(this.widgetConwidgetConfigurationfiguracion.rangoFechas[0])
+      if (rangoFechas && rangoFechas.length === 2 && rangoFechas2 && rangoFechas2.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
+      const fechaInicio = new Date(Date.parse(rangoFechas[0])); //primera fecha parseada para que reconozca el formato
+      const fechaFin = new Date(Date.parse(rangoFechas[1])); //segunda fecha
 
 
-      const fechaInicio2 = new Date(Date.parse(this.widgetConfiguration.rangoFechas2[0])); //primera fecha del segundo input parseada para que reconozca el formato
-      const fechaFin2 = new Date(Date.parse(this.widgetConfiguration.rangoFechas2[1])); //segunda fecha del segundo input 
+      const fechaInicio2 = new Date(Date.parse(rangoFechas2[0])); //primera fecha del segundo input parseada para que reconozca el formato
+      const fechaFin2 = new Date(Date.parse(rangoFechas2[1])); //segunda fecha del segundo input 
 
       const difDias1 = differenceInDays(fechaFin, fechaInicio);//Diferencia del primer rango
       const difDias2 = differenceInDays(fechaFin2, fechaInicio2);//Diferencia del segundo rango
@@ -259,6 +259,7 @@ export default {
 
   watch: { //uso el watch para que actualice todo el rato
   rangoFechas() {
+
       this.actualizarGrafica();
   },
 },
