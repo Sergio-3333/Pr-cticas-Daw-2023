@@ -65,6 +65,7 @@ export default {
 
       data() {
       return {
+<<<<<<< HEAD
         widgetConfig: {
           rangoFechas: [
             this.rangoFechas,
@@ -73,6 +74,10 @@ export default {
             this.rangoFechas2,
           ],
         },
+=======
+        rangoFechas: [], 
+        rangoFechas2: [],
+>>>>>>> 8b1df22709938468eb743e1704defcfe61befadc
         widgets: []
     }
   }, 

@@ -158,3 +158,17 @@ En cambio como la tabla si cambia el tamaño según yo le diga, este si que hace
     width: 98%;
 }
 
+.calendarioBoton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.header-container {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
