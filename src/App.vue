@@ -96,6 +96,7 @@ export default {
       
       irHoy(index){   //Creo un parametro llamado index
         const hoy = new Date();
+        hoy.setHours(0,0,0,0);
         const fecha = [new Date(hoy), new Date(hoy)];
         this.actualizarRangoFechas(index, fecha); // Lo que hago es guardar la fecha elegida en un componente fecha y con el metodo para actualizarRangoFechas, le paso el id del input. Esto lo hago con todos los metodos
 
@@ -103,7 +104,9 @@ export default {
       
       irAyer(index){
         const hoy = new Date();
+        hoy.setHours(0,0,0,0);
         const ayer = new Date(hoy);
+        ayer.setHours(0,0,0,0);
         ayer.setDate(hoy.getDate() - 1);
         const fecha = [new Date(ayer), new Date(ayer)];
         this.actualizarRangoFechas(index, fecha);
@@ -116,6 +119,8 @@ export default {
         const fechaFinal = new Date(hoy);
         fechaInicial.setDate(hoy.getDate() - 7);
         fechaFinal.setDate(hoy.getDate() - 1);
+        fechaInicial.setHours(0,0,0,0);
+        fechaFinal.setHours(0,0,0,0);
         const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
         this.actualizarRangoFechas(index, fecha);
 
@@ -125,6 +130,8 @@ export default {
         const hoy = new Date();
         const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 1);
         const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+        fechaInicial.setHours(0,0,0,0);
+        fechaFinal.setHours(0,0,0,0);
         const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
         this.actualizarRangoFechas(index, fecha);
 
@@ -134,6 +141,8 @@ export default {
         const hoy = new Date();
         const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 12);
         const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+        fechaInicial.setHours(0,0,0,0);
+        fechaFinal.setHours(0,0,0,0);
         const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
         this.actualizarRangoFechas(index, fecha);
 
@@ -144,12 +153,12 @@ export default {
         if ( index === 1){ //Condicional que dice que si el index elegido es el 1, el array/fecha se guarde en el rangoFechas para que lo pueda imprimir correctamente. Hago lo mismo con el indice 2
 
           this.widgetConfiguration.rangoFechas = [...fecha];
-          //console.log(this.widgetConfiguration.rangoFechas);
+          console.log(this.widgetConfiguration.rangoFechas);
 
         }else if (index === 2){
 
           this.widgetConfiguration.rangoFechas2 = [...fecha];
-          //console.log(this.widgetConfiguration.rangoFechas2);
+          console.log(this.widgetConfiguration.rangoFechas2);
 
         }
       }

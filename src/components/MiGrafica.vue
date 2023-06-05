@@ -12,7 +12,7 @@ import { differenceInDays } from 'date-fns';
 
 export default {
   props: {
-    idgetConfiguration: {
+    widgetConfiguration: {
       rangoFechas: {
         type: Array,
         default: [new Date(Date.now()), new Date(Date.now())],
@@ -171,7 +171,7 @@ export default {
   
   mounted() {
 
-    console.log(this.widgetConfiguration);
+    console.log('rangofechas', this.widgetConfiguration.rangoFechas);
     
     this.data2 = this.data; //guardo los json en los objetos creados para que no se borren los datos de los json. Lo hago aqui porque es donde se empieza a inicializar todo y es donde no se va a perder nada
     this.dataInvent2 = this.dataInvent;
@@ -217,12 +217,14 @@ export default {
     
 
     this.actualizarGrafica(); // Llama a la función para mostrar los datos filtrados desde el principio
+    console.log('rangofechas', this.widgetConfiguration.rangoFechas);
+
   },
   methods: {
 
     actualizarGrafica() {
     
-      console.log(this.widgetConfiguration);
+    console.log('rangofechas', this.widgetConfiguration.rangoFechas);
     if (this.widgetConfiguration.rangoFechas && this.widgetConfiguration.rangoFechas.length === 2 && this.widgetConfiguration.rangoFechas2rangoFechas2 && this.widgetConfiguration.rangoFechas2.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
       const fechaInicio = new Date(Date.parse(this.widgetConfiguration.rangoFechas[0])); //primera fecha parseada para que reconozca el formato
       const fechaFin = new Date(Date.parse(this.widgetConfiguration.rangoFechas[1])); //segunda fecha
