@@ -12,12 +12,17 @@ import { differenceInDays } from 'date-fns';
 
 export default {
   props: {
-    rangoFechas: {
-      type: Array
-    },
-    rangoFechas2: {
-      type: Array
-    }
+    widgetConfiguration: {
+      rangoFechas: {
+        type: Array,
+        default: [new Date(Date.now()), new Date(Date.now())],
+      },
+      rangoFechas2: {
+        type: Array,
+        //default: [new Date(Date.now()), new Date(Date.now())],
+},
+
+},
   },
   data() {
     return {
@@ -216,12 +221,16 @@ export default {
 
     actualizarGrafica() {
     
-    if (this.rangoFechas && this.rangoFechas.length === 2 && this.rangoFechas2 && this.rangoFechas2.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
-      const fechaInicio = new Date(Date.parse(this.rangoFechas[0])); //primera fecha parseada para que reconozca el formato
-      const fechaFin = new Date(Date.parse(this.rangoFechas[1])); //segunda fecha
+      console.log("Entra")
+      console.log(this.widgetConfiguracion.rangoFechas)
+    if (this.widgetConfiguracion.rangoFechas && this.widgetConfiguracion.rangoFechas.length === 2 && this.widgetConfiguracion.rangoFechas2rangoFechas2 && this.widgetConfiguration.rangoFechas2.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
+      const fechaInicio = new Date(Date.parse(this.widgetConfiguracion.rangoFechas[0])); //primera fecha parseada para que reconozca el formato
+      const fechaFin = new Date(Date.parse(this.widgetConfiguracion.rangoFechas[1])); //segunda fecha
+      console.log(this.widgetConfiguracion.rangoFechas[0])
 
-      const fechaInicio2 = new Date(Date.parse(this.rangoFechas2[0])); //primera fecha del segundo input parseada para que reconozca el formato
-      const fechaFin2 = new Date(Date.parse(this.rangoFechas2[1])); //segunda fecha del segundo input 
+
+      const fechaInicio2 = new Date(Date.parse(this.widgetConfiguracion.rangoFechas2[0])); //primera fecha del segundo input parseada para que reconozca el formato
+      const fechaFin2 = new Date(Date.parse(this.widgetConfiguracion.rangoFechas2[1])); //segunda fecha del segundo input 
 
       const difDias1 = differenceInDays(fechaFin, fechaInicio);//Diferencia del primer rango
       const difDias2 = differenceInDays(fechaFin2, fechaInicio2);//Diferencia del segundo rango

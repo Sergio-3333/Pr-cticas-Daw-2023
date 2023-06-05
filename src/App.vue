@@ -6,15 +6,34 @@
 <template>
   <div id="app">
 
-    <date-picker class="datepicker" v-model="rangoFechas"  placeholder="Selecciona el rango de fechas" range></date-picker> <!--Con esto selecciono un rango de fechas-->
-    <date-picker class="datepicker" v-model="rangoFechas2"  placeholder="Selecciona el rango de fechas" range></date-picker> <!--Con esto selecciono un rango de fechas-->
+    <date-picker class="datepicker" v-model="rangoFechas"  placeholder="Selecciona el rango de fechas" range>     
+      <template v-slot:header> <!--Utilizo un slot llamado header para personalizar/agregar elementos al header del calendario y despues creo los botones-->
+          <button class="calendarioBoton" @click="irHoy(1)">Hoy</button>      <!--Añado un numero a cada metodo que será su indice-->
+          <button class="calendarioBoton" @click="irAyer(1)">Ayer</button>
+          <button class="calendarioBoton" @click="irSemanaPasada(1)">Semana Pasada</button>
+          <button class="calendarioBoton" @click="irMesPasado(1)">Mes Pasado</button>
+          <button class="calendarioBoton" @click="irAnoPasado(1)">Año Pasado</button>
+      </template>
+    </date-picker> 
+
+    <date-picker class="datepicker" v-model="rangoFechas2"  placeholder="Selecciona el rango de fechas" range>     
+      <template v-slot:header> 
+          <button class="calendarioBoton" @click="irHoy(2)">Hoy</button>
+          <button class="calendarioBoton" @click="irAyer(2)">Ayer</button>
+          <button class="calendarioBoton" @click="irSemanaPasada(2)">Semana Pasada</button>
+          <button class="calendarioBoton" @click="irMesPasado(2)">Mes Pasado</button>
+          <button class="calendarioBoton" @click="irAnoPasado(2)">Año Pasado</button>
+      </template>
+    </date-picker> 
+
+    
     
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
-    <button @click="addWidgetMap()">Añadir Mapa</button>
+    <button @click="addWidgetMapa()">Añadir Mapa</button>
     <GridStackLayout>
       <GridStackItem v-for=" widget in widgets" :key="widget.id" :gs-h="widget.h" :gs-w="widget.w" >
-        <component :is="widget.typeWidget" :rangoFechas="rangoFechas" :rangoFechas2="rangoFechas2" ></component>
+        <component :is="widget.typeWidget" :widgetConfiguration="widgetConfig" ></component>
       </GridStackItem>
     </GridStackLayout>
   </div>
@@ -46,8 +65,15 @@ export default {
 
       data() {
       return {
-        rangoFechas: [], //Defino el v-model vacio
-        widgets: [],
+        widgetConfig: {
+          rangoFechas: [
+            this.rangoFechas,
+          ],
+          rangoFechas2: [
+            this.rangoFechas2,
+          ],
+        },
+        widgets: []
     }
   }, 
     methods: {
@@ -65,10 +91,67 @@ export default {
         this.widgets.push(optionsTabla);
       },
       
-      addWidgetMap(){
+      addWidgetMapa(){
         const optionsTabla = {h: 10, w:4, typeWidget:MiMapa};
 
         this.widgets.push(optionsTabla);
+      },
+      
+      irHoy(index){   //Creo un parametro llamado index
+        const hoy = new Date();
+        const fecha = [new Date(hoy), new Date(hoy)];
+        this.actualizarRangoFechas(index, fecha); // Lo que hago es guardar la fecha elegida en un componente fecha y con el metodo para actualizarRangoFechas, le paso el id del input. Esto lo hago con todos los metodos
+
+      },
+      
+      irAyer(index){
+        const hoy = new Date();
+        const ayer = new Date(hoy);
+        ayer.setDate(hoy.getDate() - 1);
+        const fecha = [new Date(ayer), new Date(ayer)];
+        this.actualizarRangoFechas(index, fecha);
+
+      },
+
+      irSemanaPasada(index){
+        const hoy = new Date();
+        const fechaInicial = new Date(hoy);
+        const fechaFinal = new Date(hoy);
+        fechaInicial.setDate(hoy.getDate() - 7);
+        fechaFinal.setDate(hoy.getDate() - 1);
+        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
+        this.actualizarRangoFechas(index, fecha);
+
+      },
+
+      irMesPasado(index){
+        const hoy = new Date();
+        const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 1);
+        const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
+        this.actualizarRangoFechas(index, fecha);
+
+      },
+
+      irAnoPasado(index){
+        const hoy = new Date();
+        const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 12);
+        const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
+        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
+        this.actualizarRangoFechas(index, fecha);
+
+      },
+
+      actualizarRangoFechas(index, fecha){  //Creo el metodo para que cada fecha se guarde en cada input
+
+        if ( index === 1){ //Condicional que dice que si el index elegido es el 1, el array/fecha se guarde en el rangoFechas para que lo pueda imprimir correctamente. Hago lo mismo con el indice 2
+
+          this.rangoFechas = [...fecha];
+
+        }else if (index === 2){
+
+          this.rangoFechas2 = [...fecha];
+        }
       }
 
     }
