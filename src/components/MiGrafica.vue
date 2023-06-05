@@ -12,17 +12,16 @@ import { differenceInDays } from 'date-fns';
 
 export default {
   props: {
-    widgetConfiguration: {
+    idgetConfiguration: {
       rangoFechas: {
         type: Array,
         default: [new Date(Date.now()), new Date(Date.now())],
       },
       rangoFechas2: {
         type: Array,
-        //default: [new Date(Date.now()), new Date(Date.now())],
-},
-
-},
+        default: [new Date(Date.now()), new Date(Date.now())],
+      },
+    }
   },
   data() {
     return {
@@ -172,6 +171,8 @@ export default {
   
   mounted() {
 
+    console.log(this.widgetConfiguration);
+    
     this.data2 = this.data; //guardo los json en los objetos creados para que no se borren los datos de los json. Lo hago aqui porque es donde se empieza a inicializar todo y es donde no se va a perder nada
     this.dataInvent2 = this.dataInvent;
 
@@ -221,16 +222,15 @@ export default {
 
     actualizarGrafica() {
     
-      console.log("Entra")
-      console.log(this.widgetConfiguracion.rangoFechas)
-    if (this.widgetConfiguracion.rangoFechas && this.widgetConfiguracion.rangoFechas.length === 2 && this.widgetConfiguracion.rangoFechas2rangoFechas2 && this.widgetConfiguration.rangoFechas2.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
-      const fechaInicio = new Date(Date.parse(this.widgetConfiguracion.rangoFechas[0])); //primera fecha parseada para que reconozca el formato
-      const fechaFin = new Date(Date.parse(this.widgetConfiguracion.rangoFechas[1])); //segunda fecha
-      console.log(this.widgetConfiguracion.rangoFechas[0])
+      console.log(this.widgetConfiguration);
+    if (this.widgetConfiguration.rangoFechas && this.widgetConfiguration.rangoFechas.length === 2 && this.widgetConfiguration.rangoFechas2rangoFechas2 && this.widgetConfiguration.rangoFechas2.length === 2) {  //Condicional para verificar si existen dos elemntos/fechas dentro de rango fechas. Las fechas las escoge bien, pero estan en un formato diferente y hay que parsearlas
+      const fechaInicio = new Date(Date.parse(this.widgetConfiguration.rangoFechas[0])); //primera fecha parseada para que reconozca el formato
+      const fechaFin = new Date(Date.parse(this.widgetConfiguration.rangoFechas[1])); //segunda fecha
+      console.log(this.widgetConwidgetConfigurationfiguracion.rangoFechas[0])
 
 
-      const fechaInicio2 = new Date(Date.parse(this.widgetConfiguracion.rangoFechas2[0])); //primera fecha del segundo input parseada para que reconozca el formato
-      const fechaFin2 = new Date(Date.parse(this.widgetConfiguracion.rangoFechas2[1])); //segunda fecha del segundo input 
+      const fechaInicio2 = new Date(Date.parse(this.widgetConfiguration.rangoFechas2[0])); //primera fecha del segundo input parseada para que reconozca el formato
+      const fechaFin2 = new Date(Date.parse(this.widgetConfiguration.rangoFechas2[1])); //segunda fecha del segundo input 
 
       const difDias1 = differenceInDays(fechaFin, fechaInicio);//Diferencia del primer rango
       const difDias2 = differenceInDays(fechaFin2, fechaInicio2);//Diferencia del segundo rango

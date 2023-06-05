@@ -6,7 +6,7 @@
 <template>
   <div id="app">
 
-    <date-picker class="datepicker" v-model="rangoFechas"  placeholder="Selecciona el rango de fechas" range>     
+    <date-picker class="datepicker" v-model="widgetConfiguration.rangoFechas"  placeholder="Selecciona el rango de fechas" range>     
       <template v-slot:header> <!--Utilizo un slot llamado header para personalizar/agregar elementos al header del calendario y despues creo los botones-->
           <button class="calendarioBoton" @click="irHoy(1)">Hoy</button>      <!--Añado un numero a cada metodo que será su indice-->
           <button class="calendarioBoton" @click="irAyer(1)">Ayer</button>
@@ -16,7 +16,7 @@
       </template>
     </date-picker> 
 
-    <date-picker class="datepicker" v-model="rangoFechas2"  placeholder="Selecciona el rango de fechas" range>     
+    <date-picker class="datepicker" v-model="widgetConfiguration.rangoFechas2"  placeholder="Selecciona el rango de fechas" range>     
       <template v-slot:header> 
           <button class="calendarioBoton" @click="irHoy(2)">Hoy</button>
           <button class="calendarioBoton" @click="irAyer(2)">Ayer</button>
@@ -65,14 +65,11 @@ export default {
 
       data() {
       return {
-        widgetConfig: {
-          rangoFechas: [
-            this.rangoFechas,
-          ],
-          rangoFechas2: [
-            this.rangoFechas2,
-          ],
+        widgetConfiguration: {
+          rangoFechas: [],
+          rangoFechas2: [],
         },
+        
         widgets: []
     }
   }, 
@@ -146,11 +143,14 @@ export default {
 
         if ( index === 1){ //Condicional que dice que si el index elegido es el 1, el array/fecha se guarde en el rangoFechas para que lo pueda imprimir correctamente. Hago lo mismo con el indice 2
 
-          this.rangoFechas = [...fecha];
+          this.widgetConfiguration.rangoFechas = [...fecha];
+          //console.log(this.widgetConfiguration.rangoFechas);
 
         }else if (index === 2){
 
-          this.rangoFechas2 = [...fecha];
+          this.widgetConfiguration.rangoFechas2 = [...fecha];
+          //console.log(this.widgetConfiguration.rangoFechas2);
+
         }
       }
 
