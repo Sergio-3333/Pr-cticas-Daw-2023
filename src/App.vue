@@ -74,7 +74,8 @@ export default {
     }
   }, 
     methods: {
-       
+
+
       addWidgetGrafica(){
         const optionsGrafica = {h: 10, w:4, typeWidget:MiGrafica};
 
@@ -119,8 +120,6 @@ export default {
         const fechaFinal = new Date(hoy);
         fechaInicial.setDate(hoy.getDate() - 7);
         fechaFinal.setDate(hoy.getDate() - 1);
-        fechaInicial.setHours(0,0,0,0);
-        fechaFinal.setHours(0,0,0,0);
         const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
         this.actualizarRangoFechas(index, fecha);
 

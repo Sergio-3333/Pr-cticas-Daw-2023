@@ -213,14 +213,17 @@ export default {
       resize_ob.observe(container); 
     });
     
-
     this.actualizarGrafica(); // Llama a la función para mostrar los datos filtrados desde el principio
+
+
 
   },
   methods: {
 
     actualizarGrafica() {
-      
+
+      //2020-01-01 ~ 2023-04-01     2012-01-01 ~ 2015-04-01
+
       console.log("Este es el de MiGrafica",this.widgetConfiguration);
       
       const rangoFechas = this.widgetConfiguration.rangoFechas;
@@ -258,10 +261,10 @@ export default {
   },
 
   watch: { //uso el watch para que actualice todo el rato
+    
   rangoFechas() {
-
       this.actualizarGrafica();
-  },
+  }
 },
 
 

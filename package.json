@@ -18,7 +18,8 @@
         "resize-observer-polyfill": "^1.5.1",
         "tabulator-tables": "^5.3.1",
         "vue": "^2.7.8",
-        "vue2-datepicker": "^3.11.1"
+        "vue2-datepicker": "^3.11.1",
+        "vue2-google-maps": "^0.10.7"
     },
     "devDependencies": {
         "@babel/core": "^7.12.16",
