@@ -77,11 +77,13 @@ export default {
 
 
       addWidgetGrafica(){
-        const optionsGrafica = {h: 10, w:4, typeWidget:MiGrafica};
+        if(this.widgetConfiguration.rangoFechas == "" || this.widgetConfiguration.rangoFechas2 == "" ) {
+          alert("Debes introducir fechas")
+        } else {
+            const optionsGrafica = {h: 10, w:4, typeWidget:MiGrafica};
 
-        //console.log(this.rangoFechas); // las fechas me las reconoce y las guarda correctamente
-
-        this.widgets.push(optionsGrafica);
+            this.widgets.push(optionsGrafica);
+        }
       },
       addWidgetTabla(){
         const optionsTabla = {h: 10, w:4, typeWidget:MiTabla};
