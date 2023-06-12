@@ -7,35 +7,35 @@
   <div id="app">
 
     <date-picker class="datepicker" v-model="widgetConfiguration.rangoFechas"  placeholder="Selecciona el rango de fechas" range>     
-      <template v-slot:header> <!--Utilizo un slot llamado header para personalizar/agregar elementos al header del calendario y despues creo los botones-->
-          <button class="calendarioBoton" @click="irHoy(1)">Hoy</button>      <!--Añado un numero a cada metodo que será su indice-->
-          <button class="calendarioBoton" @click="irAyer(1)">Ayer</button>
-          <button class="calendarioBoton" @click="irSemanaPasada(1)">Semana Pasada</button>
-          <button class="calendarioBoton" @click="irMesPasado(1)">Mes Pasado</button>
-          <button class="calendarioBoton" @click="irAnoPasado(1)">Año Pasado</button>
+      <template v-slot:header= "{ emit }"> <!---->
+          <button class="calendarioBoton" @click="irHoy(emit)">Hoy</button>      <!--Paso el emit como argumento para poder establecer la comunicacion entre padre e hijo-->
+          <button class="calendarioBoton" @click="irAyer(emit)">Ayer</button>
+          <button class="calendarioBoton" @click="irSemanaPasada(emit)">Semana Pasada</button>
+          <button class="calendarioBoton" @click="irMesPasado(emit)">Mes Pasado</button>
+          <button class="calendarioBoton" @click="irAnoPasado(emit)">Año Pasado</button>
       </template>
     </date-picker> 
 
     <date-picker class="datepicker" v-model="widgetConfiguration.rangoFechas2"  placeholder="Selecciona el rango de fechas" range>     
-      <template v-slot:header> 
-          <button class="calendarioBoton" @click="irHoy(2)">Hoy</button>
-          <button class="calendarioBoton" @click="irAyer(2)">Ayer</button>
-          <button class="calendarioBoton" @click="irSemanaPasada(2)">Semana Pasada</button>
-          <button class="calendarioBoton" @click="irMesPasado(2)">Mes Pasado</button>
-          <button class="calendarioBoton" @click="irAnoPasado(2)">Año Pasado</button>
+      <template v-slot:header= "{ emit }"> <!--Defino el emit en el header para que asi me deje utilizarlo como argumento en los metodos-->
+          <button class="calendarioBoton" @click="irHoy(emit)">Hoy</button>      
+          <button class="calendarioBoton" @click="irAyer(emit)">Ayer</button>
+          <button class="calendarioBoton" @click="irSemanaPasada(emit)">Semana Pasada</button>
+          <button class="calendarioBoton" @click="irMesPasado(emit)">Mes Pasado</button>
+          <button class="calendarioBoton" @click="irAnoPasado(emit)">Año Pasado</button>
       </template>
-    </date-picker> 
+    </date-picker>  
 
-    
-    
     <button @click="addWidgetGrafica()">Añadir Grafica</button>
     <button @click="addWidgetTabla()">Añadir Tabla</button>
     <button @click="addWidgetMapa()">Añadir Mapa</button>
+
     <GridStackLayout>
       <GridStackItem v-for=" widget in widgets" :key="widget.id" :gs-h="widget.h" :gs-w="widget.w" >
         <component :is="widget.typeWidget" :widgetConfiguration="widgetConfiguration" ></component>
       </GridStackItem>
     </GridStackLayout>
+
   </div>
 </template>
 <script>
@@ -45,12 +45,9 @@ import MiTabla from './components/MiTabla.vue';
 import MiMapa from './components/MiMapa.vue';
 import GridStackItem from './components/GridStackItem.vue';
 import GridStackLayout from './components/GridStackLayout.vue';
-//import GridStack from "/node_modules/gridstack/dist/gridstack-h5.js";
 import "gridstack/dist/gridstack.min.css";
 import DatePicker from 'vue2-datepicker';
-//import {parse} from 'date-fns';
-
-
+import { subMonths,  subWeeks, startOfDay, subDays, subYears } from 'date-fns';
 
 export default {
   name: 'app',
@@ -77,14 +74,15 @@ export default {
 
 
       addWidgetGrafica(){
+        
         if(this.widgetConfiguration.rangoFechas == "" || this.widgetConfiguration.rangoFechas2 == "" ) {
           alert("Debes introducir fechas")
         } else {
             const optionsGrafica = {h: 10, w:4, typeWidget:MiGrafica};
-
             this.widgets.push(optionsGrafica);
         }
       },
+
       addWidgetTabla(){
         const optionsTabla = {h: 10, w:4, typeWidget:MiTabla};
 
@@ -97,74 +95,42 @@ export default {
         this.widgets.push(optionsTabla);
       },
       
-      irHoy(index){   //Creo un parametro llamado index
-        const hoy = new Date();
-        hoy.setHours(0,0,0,0);
-        const fecha = [new Date(hoy), new Date(hoy)];
-        this.actualizarRangoFechas(index, fecha); // Lo que hago es guardar la fecha elegida en un componente fecha y con el metodo para actualizarRangoFechas, le paso el id del input. Esto lo hago con todos los metodos
-
+      irHoy(emit){
+        const date = new Date();    //Defino los metodos con el argumento emit e imprimo el resultado deseado para enviarlo al componente padre
+        emit([date,date]);
       },
       
-      irAyer(index){
-        const hoy = new Date();
-        hoy.setHours(0,0,0,0);
-        const ayer = new Date(hoy);
-        ayer.setHours(0,0,0,0);
-        ayer.setDate(hoy.getDate() - 1);
-        const fecha = [new Date(ayer), new Date(ayer)];
-        this.actualizarRangoFechas(index, fecha);
-
+      irAyer(emit){
+        const date = new Date();
+        const yesterday = subDays(date, 1); //Creo una constante que recibe una funcion que coge el dia elegido y le resta uno
+        emit([yesterday, yesterday]); //Devuelve el dia
       },
 
-      irSemanaPasada(index){
-        const hoy = new Date();
-        const fechaInicial = new Date(hoy);
-        const fechaFinal = new Date(hoy);
-        fechaInicial.setDate(hoy.getDate() - 7);
-        fechaFinal.setDate(hoy.getDate() - 1);
-        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
-        this.actualizarRangoFechas(index, fecha);
-
+      irSemanaPasada(emit) {
+        const date = startOfDay(new Date());
+        const lastWeekStart = subWeeks(date, 1);
+        const lastWeekEnd = subDays(date, 1);
+        emit([lastWeekStart, lastWeekEnd]);
       },
 
-      irMesPasado(index){
-        const hoy = new Date();
-        const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 1);
-        const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
-        fechaInicial.setHours(0,0,0,0);
-        fechaFinal.setHours(0,0,0,0);
-        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
-        this.actualizarRangoFechas(index, fecha);
 
+      irMesPasado(emit){
+        const date = startOfDay(new Date());
+        const lastMonthStart = subMonths(date, 1);
+        const lastMonthEnd = subDays(date, 1);
+        emit([lastMonthStart, lastMonthEnd]);
       },
 
-      irAnoPasado(index){
-        const hoy = new Date();
-        const fechaInicial = new Date(hoy.getFullYear(), hoy.getMonth() - 12);
-        const fechaFinal = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
-        fechaInicial.setHours(0,0,0,0);
-        fechaFinal.setHours(0,0,0,0);
-        const fecha = [new Date(fechaInicial), new Date(fechaFinal)];
-        this.actualizarRangoFechas(index, fecha);
+      irAnoPasado(emit){
+        const date = startOfDay(new Date());
+        const lastYearStart = subYears(date, 1);
+        const lastYearEnd = subDays(date, 1);
+        emit([lastYearStart, lastYearEnd]);
+      }
 
-      },
-
-      actualizarRangoFechas(index, fecha){  //Creo el metodo para que cada fecha se guarde en cada input
-
-        if ( index === 1){ //Condicional que dice que si el index elegido es el 1, el array/fecha se guarde en el rangoFechas para que lo pueda imprimir correctamente. Hago lo mismo con el indice 2
-
-          this.widgetConfiguration.rangoFechas = [...fecha];
-          console.log('Fecha 1', this.widgetConfiguration.rangoFechas);
-
-        }else if (index === 2){
-
-          this.widgetConfiguration.rangoFechas2 = [...fecha];
-          console.log('Fecha 2', this.widgetConfiguration.rangoFechas2);
-
-        }
       }
 
     }
-}
+  
 
 </script>
